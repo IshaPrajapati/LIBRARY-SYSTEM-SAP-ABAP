@@ -1,0 +1,2553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAP GUI - Library Management System (ZA16_LIBRARY_MANAGEMENT)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sap-bg: #e5ecf4;
+      --sap-title-bar-top: #366092;
+      --sap-title-bar-bot: #1b365d;
+      --sap-toolbar-bg: #e3edf7;
+      --sap-toolbar-border: #b8cde3;
+      --sap-window-border: #8ba9ce;
+      --sap-frame-bg: #e7eff8;
+      --sap-frame-border: #a3b8cc;
+      --sap-button-bg-top: #fbfcfe;
+      --sap-button-bg-mid: #eef3f9;
+      --sap-button-bg-bot: #dde7f2;
+      --sap-button-border: #7f9db9;
+      --sap-button-hover: #fff3bb;
+      --sap-button-hover-border: #e2b709;
+      --sap-field-bg: #ffffff;
+      --sap-field-focus: #fffbdf;
+      --sap-text: #000000;
+      --sap-statusbar-bg: #e9f0f8;
+      --sap-statusbar-text: #333333;
+      --sap-table-header: #dde7f0;
+      --sap-table-border: #a4b8cc;
+      --sap-font: 'Segoe UI', Tahoma, Arial, sans-serif;
+      --sap-mono: 'JetBrains Mono', Consolas, monospace;
+      --sap-accent: #0a6ed1;
+    }
+
+    [data-theme="fiori"] {
+      --sap-bg: #f3f5f8;
+      --sap-title-bar-top: #2c3e50;
+      --sap-title-bar-bot: #1a252f;
+      --sap-toolbar-bg: #ffffff;
+      --sap-toolbar-border: #d5dbe0;
+      --sap-window-border: #d5dbe0;
+      --sap-frame-bg: #ffffff;
+      --sap-frame-border: #e2e8f0;
+      --sap-button-bg-top: #0a6ed1;
+      --sap-button-bg-mid: #085caf;
+      --sap-button-bg-bot: #085caf;
+      --sap-button-border: #085caf;
+      --sap-button-hover: #074786;
+      --sap-button-hover-border: #074786;
+      --sap-field-bg: #ffffff;
+      --sap-field-focus: #eef5fc;
+      --sap-text: #1d2d3e;
+      --sap-statusbar-bg: #354a5f;
+      --sap-statusbar-text: #ffffff;
+      --sap-table-header: #f2f4f7;
+      --sap-table-border: #e0e5eb;
+      --sap-accent: #0070f2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: var(--sap-font);
+      background: #090d16;
+      color: var(--sap-text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    /* Top Developer Bar */
+    .runner-top-nav {
+      background: #111827;
+      color: #e2e8f0;
+      padding: 6px 16px;
+      font-size: 11.5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1f2937;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .runner-top-nav .badge {
+      background: #2563eb;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .runner-top-nav .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .runner-top-nav button {
+      background: #1f2937;
+      color: #e2e8f0;
+      border: 1px solid #374151;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease-in-out;
+    }
+    .runner-top-nav button:hover {
+      background: #374151;
+      color: white;
+      border-color: #4b5563;
+    }
+    .runner-top-nav button.active {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: white;
+    }
+
+    /* SAP GUI Window Frame */
+    .sap-window {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--sap-bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Window Header / Titlebar */
+    .sap-titlebar {
+      background: linear-gradient(180deg, var(--sap-title-bar-top) 0%, var(--sap-title-bar-bot) 100%);
+      color: #ffffff;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+      flex-shrink: 0;
+    }
+    .sap-title-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sap-title-logo {
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      font-size: 14px;
+      color: #ffd700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+    .sap-window-controls {
+      display: flex;
+      gap: 4px;
+    }
+    .sap-win-btn {
+      width: 18px;
+      height: 18px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 2px;
+      color: white;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .sap-win-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Menu Bar */
+    .sap-menubar {
+      background: #f0f4f9;
+      border-bottom: 1px solid #c7d7e8;
+      padding: 2px 10px;
+      display: flex;
+      gap: 18px;
+      font-size: 11px;
+      color: #111;
+      flex-shrink: 0;
+    }
+    .sap-menubar span {
+      cursor: pointer;
+      padding: 2px 5px;
+      border-radius: 2px;
+    }
+    .sap-menubar span:hover {
+      background: #d8e5f3;
+    }
+
+    /* Standard Toolbar */
+    .sap-toolbar {
+      background: linear-gradient(180deg, #f8fbfe 0%, #e3edf7 100%);
+      border-bottom: 1px solid #adc4db;
+      padding: 3px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .sap-okcode-box {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: white;
+      border: 1px solid #7f9db9;
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+    .sap-okcode-box input {
+      border: none;
+      outline: none;
+      font-family: var(--sap-mono);
+      font-size: 11px;
+      width: 90px;
+      text-transform: uppercase;
+    }
+    .sap-tb-btn {
+      padding: 2px 5px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      background: transparent;
+      height: 22px;
+      min-width: 22px;
+      transition: all 0.1s;
+    }
+    .sap-tb-btn:hover {
+      background: #fef8dd;
+      border-color: #e5b922;
+    }
+    .sap-tb-btn:active {
+      background: #f0e6b2;
+    }
+    .sap-tb-separator {
+      width: 1px;
+      height: 18px;
+      background: #bacde0;
+      margin: 0 2px;
+    }
+
+    /* Title Sub-bar */
+    .sap-screen-titlebar {
+      background: linear-gradient(180deg, #ffffff 0%, #d8e4f1 100%);
+      border-bottom: 1px solid #9ebddc;
+      padding: 4px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .sap-screen-titlebar .sap-brand-text {
+      font-style: italic;
+      font-weight: 800;
+      font-size: 15px;
+      color: #1a3b69;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sap-screen-id-tag {
+      font-family: var(--sap-mono);
+      font-size: 11px;
+      color: #4b6b94;
+      background: #edf3fa;
+      padding: 2px 8px;
+      border: 1px solid #bed3e8;
+      border-radius: 3px;
+    }
+
+    /* Work Area / Canvas */
+    .sap-canvas {
+      flex: 1;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      background: var(--sap-bg);
+      background-image: radial-gradient(#cad7e6 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* SAP Frame / Groupbox */
+    .sap-frame {
+      background: var(--sap-frame-bg);
+      border: 1px solid var(--sap-frame-border);
+      border-radius: 2px;
+      width: 100%;
+      max-width: 920px;
+      min-height: 480px;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.08), inset 1px 1px 0 rgba(255,255,255,0.7);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      animation: fadeIn 0.15s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0.85; transform: scale(0.995); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .sap-frame-header {
+      background: linear-gradient(180deg, #d3e1f0 0%, #b8cfe6 100%);
+      border-bottom: 1px solid #94b2d1;
+      padding: 6px 14px;
+      font-weight: 700;
+      font-size: 12px;
+      color: #0d294d;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .sap-frame-body {
+      flex: 1;
+      padding: 24px 30px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    /* Forms and Input Fields */
+    .sap-form-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    .sap-label {
+      width: 170px;
+      font-weight: 600;
+      color: #1b385a;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+      flex-shrink: 0;
+    }
+    .sap-input-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .sap-input {
+      background: var(--sap-field-bg);
+      border: 1px solid #7f9db9;
+      padding: 5px 8px;
+      font-size: 12px;
+      color: #000;
+      border-radius: 1px;
+      outline: none;
+      width: 260px;
+      font-family: var(--sap-font);
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .sap-input:focus {
+      background: var(--sap-field-focus);
+      border-color: #cb221a;
+      box-shadow: 0 0 0 1px #cb221a inset;
+    }
+    .sap-input[readonly] {
+      background: #eef2f7;
+      color: #334155;
+      border-color: #b0c4de;
+      cursor: default;
+    }
+
+    /* SAP Buttons */
+    .sap-btn {
+      background: linear-gradient(180deg, var(--sap-button-bg-top) 0%, var(--sap-button-bg-mid) 40%, var(--sap-button-bg-bot) 100%);
+      border: 1px solid var(--sap-button-border);
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #000;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: 2px;
+      min-width: 80px;
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.1), inset 1px 1px 0 rgba(255,255,255,0.8);
+      transition: background 0.1s, border-color 0.1s;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .sap-btn:hover {
+      background: linear-gradient(180deg, #fffde6 0%, var(--sap-button-hover) 100%);
+      border-color: var(--sap-button-hover-border);
+    }
+    .sap-btn:active {
+      background: #e2ebf5;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .sap-btn-lg {
+      padding: 8px 20px;
+      min-width: 170px;
+      font-size: 11.5px;
+    }
+    .sap-btn-sm {
+      padding: 3px 8px;
+      min-width: 60px;
+      font-size: 10.5px;
+    }
+    .sap-btn-success {
+      background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%);
+      border-color: #86efac;
+      color: #166534;
+    }
+    .sap-btn-success:hover {
+      background: #bbf7d0;
+      border-color: #4ade80;
+    }
+
+    /* Icons */
+    .sap-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    /* Category Filter Pills */
+    .category-pills {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .cat-pill {
+      padding: 3px 10px;
+      background: #f0f4f9;
+      border: 1px solid #b8cfe6;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #1e3a8a;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cat-pill:hover {
+      background: #e2ebf6;
+      border-color: #3b82f6;
+    }
+    .cat-pill.active {
+      background: #1e40af;
+      border-color: #1e3a8a;
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(30, 64, 175, 0.3);
+    }
+
+    /* Table Control */
+    .sap-tablecontrol-container {
+      margin-top: 10px;
+      border: 1px solid var(--sap-table-border);
+      background: white;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+      border-radius: 1px;
+      overflow-y: auto;
+      max-height: 330px;
+      position: relative;
+    }
+    .sap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+    }
+    .sap-table th {
+      background: linear-gradient(180deg, #f2f6fa 0%, var(--sap-table-header) 100%);
+      border-bottom: 1px solid #adc2d6;
+      border-right: 1px solid #adc2d6;
+      padding: 6px 10px;
+      text-align: left;
+      font-weight: 600;
+      color: #112847;
+      font-size: 11px;
+      letter-spacing: 0.2px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .sap-table td {
+      border-bottom: 1px solid #e1e9f1;
+      border-right: 1px solid #e1e9f1;
+      padding: 6px 10px;
+      color: #1e293b;
+      vertical-align: middle;
+    }
+    .sap-table tr:nth-child(even) td {
+      background: #f9fbfe;
+    }
+    .sap-table tr:hover td {
+      background: #eaf2fc;
+    }
+    .sap-table tr.selected td {
+      background: #cde4ff;
+    }
+
+    /* Badges */
+    .badge-status {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .badge-available {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+    .badge-issued {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fcd34d;
+    }
+    .badge-cat {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      font-size: 9.5px;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    /* Status Bar */
+    .sap-statusbar {
+      background: var(--sap-statusbar-bg);
+      border-top: 1px solid #adc4db;
+      padding: 2px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--sap-statusbar-text);
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .sap-sb-msg {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+    .sap-sb-msg.error {
+      color: #b91c1c;
+    }
+    .sap-sb-msg.success {
+      color: #15803d;
+    }
+    .sap-sb-msg.info {
+      color: #0369a1;
+    }
+    .sap-sb-system {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--sap-mono);
+      font-size: 10.5px;
+      color: #555;
+    }
+    .sap-sb-pane {
+      padding: 1px 6px;
+      border-left: 1px solid #c0d3e5;
+    }
+
+    /* Modal / Message Dialog */
+    .sap-dialog-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(1px);
+    }
+    .sap-dialog-overlay.active {
+      display: flex;
+    }
+    .sap-dialog {
+      background: #eaf0f8;
+      border: 2px solid #5278a3;
+      border-radius: 3px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      width: 440px;
+      overflow: hidden;
+      animation: popIn 0.15s ease-out;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .sap-dialog-header {
+      background: linear-gradient(180deg, #366092 0%, #1b365d 100%);
+      color: white;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sap-dialog-body {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12.5px;
+      color: #1e293b;
+      white-space: pre-line;
+    }
+    .sap-dialog-footer {
+      background: #dbe5f1;
+      border-top: 1px solid #b8cfe6;
+      padding: 8px 14px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* Side Panels: SE11 Inspector & ABAP Code Viewer */
+    .side-drawer {
+      position: fixed;
+      top: 35px;
+      right: -620px;
+      width: 600px;
+      height: calc(100vh - 35px);
+      background: #111827;
+      color: #f1f5f9;
+      box-shadow: -5px 0 25px rgba(0,0,0,0.6);
+      transition: right 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+    }
+    .side-drawer.open {
+      right: 0;
+    }
+    .side-drawer-header {
+      padding: 12px 16px;
+      background: #090d16;
+      border-bottom: 1px solid #1f2937;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .side-drawer-title {
+      font-weight: 700;
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #38bdf8;
+    }
+    .side-drawer-body {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      font-family: var(--sap-mono);
+      font-size: 12px;
+    }
+    .abap-code-block {
+      background: #030712;
+      border: 1px solid #1f2937;
+      border-radius: 4px;
+      padding: 14px;
+      overflow-x: auto;
+      line-height: 1.5;
+      color: #93c5fd;
+      white-space: pre-wrap;
+    }
+
+    /* Grids */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 26px;
+      max-width: 580px;
+      margin: 24px auto;
+    }
+    .screen-footer-btns {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1px dashed #b9cde0;
+    }
+    .screen-header-user {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #034f84;
+      margin-bottom: 18px;
+    }
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-size: 11.5px;
+    }
+  </style>
+</head>
+<body data-theme="classic">
+
+  <!-- Top Developer / Live Runner Bar -->
+  <div class="runner-top-nav">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="badge">SAP ABAP RUNNER</span>
+      <span style="font-weight: 600; color: #94a3b8;">Report: ZA16_LIBRARY_MANAGEMENT</span>
+      <span style="color: #4b5563;">|</span>
+      <span style="color: #38bdf8; font-weight: 600;" id="current-screen-badge">Dynpro 1000 (LOGIN PAGE)</span>
+    </div>
+    <div class="nav-actions">
+      <button id="btn-toggle-theme" onclick="toggleTheme()" title="Switch between SAP GUI Classic and SAP Fiori theme">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Theme: <b id="theme-name">SAP GUI Classic</b></span>
+      </button>
+      <button id="btn-se11" onclick="toggleDrawer('se11')" title="Inspect SAP Dictionary DDIC Tables">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <span>SE11 DB Tables (<span id="table-record-count">4</span>)</span>
+      </button>
+      <button id="btn-se38" onclick="toggleDrawer('abap')" title="View current screen ABAP logic">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span>Screen ABAP Code</span>
+      </button>
+      <button onclick="resetMockDatabase()" style="color: #f87171; border-color: #7f1d1d;" title="Reset database to demo catalog">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></svg>
+        <span>Reset DB</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main SAP GUI Window -->
+  <div class="sap-window">
+    <!-- Window Titlebar -->
+    <div class="sap-titlebar">
+      <div class="sap-title-left">
+        <span class="sap-title-logo">SAP</span>
+        <span id="window-title-text">ZA16_LIBRARY_MANAGEMENT - Screen 1000</span>
+      </div>
+      <div class="sap-window-controls">
+        <div class="sap-win-btn" title="Minimize">_</div>
+        <div class="sap-win-btn" title="Maximize">□</div>
+        <div class="sap-win-btn" title="Close" onclick="callScreen(0)">✕</div>
+      </div>
+    </div>
+
+    <!-- Menubar -->
+    <div class="sap-menubar">
+      <span>Menu</span>
+      <span>Edit</span>
+      <span>Goto</span>
+      <span>System</span>
+      <span>Help</span>
+    </div>
+
+    <!-- SAP Standard Toolbar -->
+    <div class="sap-toolbar">
+      <button class="sap-tb-btn" title="Enter / Execute (Enter)" onclick="handleToolbarEnter()">
+        <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+      <div class="sap-okcode-box">
+        <input type="text" id="ok-code-input" placeholder="/n..." title="Command field (OK Code, e.g., /n, /h, /n1004)" onkeydown="if(event.key==='Enter') handleToolbarEnter()">
+      </div>
+      <button class="sap-tb-btn" title="Save (Ctrl+S)" onclick="handleSaveToolbar()">
+        <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      </button>
+      <div class="sap-tb-separator"></div>
+      <button class="sap-tb-btn" title="Back (F3)" onclick="handleNavBack()">
+        <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="sap-tb-btn" title="Exit (Shift+F3)" onclick="handleNavExit()">
+        <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <button class="sap-tb-btn" title="Cancel (F12)" onclick="handleNavCancel()">
+        <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+      </button>
+      <div class="sap-tb-separator"></div>
+      <button class="sap-tb-btn" title="Print (Ctrl+P)"><svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+      <button class="sap-tb-btn" title="Find (Ctrl+F)" onclick="document.getElementById('search-book-name')?.focus()"><svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    </div>
+
+    <!-- Title Sub-bar -->
+    <div class="sap-screen-titlebar">
+      <div class="sap-brand-text">
+        <span>SAP</span>
+        <span style="font-weight: 500; font-size: 13px; color: #475569;">— Library Management System</span>
+      </div>
+      <div class="sap-screen-id-tag" id="current-screen-tag">Screen 1000</div>
+    </div>
+
+    <!-- Canvas -->
+    <div class="sap-canvas">
+      
+      <!-- SCREEN 1000: LOGIN PAGE -->
+      <div id="screen-1000" class="sap-frame" style="max-width: 600px; min-height: 380px; margin-top: 30px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM</span>
+          <span style="font-size: 11px; font-weight: normal; color: #334155;">Screen 1000</span>
+        </div>
+        <div class="sap-frame-body" style="align-items: center; justify-content: center; text-align: center;">
+          <div style="color: #1e40af; font-size: 14px; font-weight: 700; margin-bottom: 26px; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Login To Your Account</span>
+          </div>
+
+          <div style="margin-bottom: 16px; text-align: left;">
+            <div class="sap-form-row">
+              <span class="sap-label" style="width: 110px;">USER ID :</span>
+              <div class="sap-input-wrapper">
+                <input type="text" id="login-user-id" class="sap-input" value="SIBI" placeholder="Enter User ID" style="width: 220px;" onkeydown="if(event.key==='Enter') executeLogin()">
+              </div>
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label" style="width: 110px;">PASSWORD :</span>
+              <div class="sap-input-wrapper">
+                <input type="password" id="login-password" class="sap-input" value="password123" placeholder="Enter Password" style="width: 220px;" onkeydown="if(event.key==='Enter') executeLogin()">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 8px; margin-bottom: 24px;">
+            <button class="sap-btn" onclick="executeLogin()" style="width: 130px;">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>LOGIN</span>
+            </button>
+          </div>
+
+          <div style="display: flex; gap: 16px;">
+            <button class="sap-btn" onclick="callScreen(1002)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+              <span>CREATE NEW ACCOUNT</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(0)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>EXIT</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1001: HOME PAGE -->
+      <div id="screen-1001" class="sap-frame" style="display: none; max-width: 740px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM</span>
+          <span style="font-size: 11px; font-weight: normal; color: #334155;">Screen 1001</span>
+        </div>
+        <div class="sap-frame-body">
+          <div class="screen-header-user">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1e40af" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>
+            <span>WELCOME</span>
+            <input type="text" id="home-welcome-name" class="sap-input" style="width: 220px; font-weight: bold; background: #fffde6;" readonly>
+          </div>
+
+          <div class="menu-grid">
+            <button class="sap-btn sap-btn-lg" onclick="callScreen(1004)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>SEARCH BOOK DETAILS</span>
+            </button>
+            <button class="sap-btn sap-btn-lg" onclick="callScreen(1005)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>GET BOOK</span>
+            </button>
+            <button class="sap-btn sap-btn-lg" onclick="callScreen(1007)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>SHOW BOOK</span>
+            </button>
+            <button class="sap-btn sap-btn-lg" onclick="callScreen(1006)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+              <span>RETURN BOOK</span>
+            </button>
+          </div>
+
+          <div style="text-align: center; margin-top: 10px;">
+            <button class="sap-btn sap-btn-lg" onclick="callScreen(1008)" style="min-width: 240px;">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span>UPDATE USER PROFILE</span>
+            </button>
+          </div>
+
+          <div class="screen-footer-btns">
+            <button class="sap-btn" onclick="callScreen(0)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>EXIT</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(1000)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+              <span>LOGOUT</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1002: REGISTRATION PAGE 1 -->
+      <div id="screen-1002" class="sap-frame" style="display: none; max-width: 680px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM</span>
+          <span style="font-size: 11px; font-weight: normal; color: #334155;">Screen 1002</span>
+        </div>
+        <div class="sap-frame-body" style="align-items: center;">
+          <div style="color: #1e40af; font-size: 13px; font-weight: 700; margin-bottom: 24px;">
+            CREATE ACCOUNT
+          </div>
+
+          <div style="width: 440px;">
+            <div class="sap-form-row">
+              <span class="sap-label">USER ID :</span>
+              <div class="sap-input-wrapper">
+                <input type="text" id="reg1-userid" class="sap-input" placeholder="e.g. USER101">
+              </div>
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">PASSWORD :</span>
+              <div class="sap-input-wrapper">
+                <input type="password" id="reg1-pass" class="sap-input">
+              </div>
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">RE-ENTER PASSWORD :</span>
+              <div class="sap-input-wrapper">
+                <input type="password" id="reg1-pass2" class="sap-input">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px; margin-bottom: 25px;">
+            <button class="sap-btn" onclick="executeRegistrationStep1()" style="width: 140px;">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>SUBMIT</span>
+            </button>
+          </div>
+
+          <div style="width: 100%; display: flex; justify-content: flex-start;">
+            <button class="sap-btn" onclick="callScreen(1000)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>EXIT</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1003: REGISTRATION PAGE 2 -->
+      <div id="screen-1003" class="sap-frame" style="display: none; max-width: 760px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM - REGISTRATION PAGE</span>
+          <button class="sap-btn" style="padding: 2px 8px; font-size: 10px;" onclick="callScreen(1000)">LOGOUT</button>
+        </div>
+        <div class="sap-frame-body">
+          <div style="text-align: center; color: #1e40af; font-size: 13px; font-weight: 700; margin-bottom: 20px;">
+            ENTER THE DETAILS
+          </div>
+
+          <div style="max-width: 550px; margin: 0 auto;">
+            <div class="sap-form-row">
+              <span class="sap-label">NAME :</span>
+              <input type="text" id="reg2-name" class="sap-input" placeholder="Full name">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">GENDER :</span>
+              <div class="radio-group">
+                <label><input type="radio" name="reg2-gender" value="MALE" checked> MALE</label>
+                <label><input type="radio" name="reg2-gender" value="FEMALE"> FEMALE</label>
+                <label><input type="radio" name="reg2-gender" value="OTHERS"> OTHERS</label>
+              </div>
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">PHONE NO :</span>
+              <input type="text" id="reg2-phone" class="sap-input" placeholder="Phone or Mobile">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">DEGREE :</span>
+              <input type="text" id="reg2-degree" class="sap-input" placeholder="e.g. B.Tech / B.Sc / MBA">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">BRANCH :</span>
+              <input type="text" id="reg2-branch" class="sap-input" placeholder="e.g. Computer Science">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">ROLL NO :</span>
+              <input type="text" id="reg2-roll" class="sap-input" placeholder="e.g. 101">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">ADDRESS :</span>
+              <input type="text" id="reg2-address" class="sap-input" placeholder="Residential or Hostel Address">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">DATE & TIME :</span>
+              <input type="text" id="reg2-date" class="sap-input" readonly>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin: 20px 0 10px;">
+            <button class="sap-btn" onclick="executeRegistrationStep2()" style="min-width: 140px;">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>SUBMIT</span>
+            </button>
+          </div>
+
+          <div class="screen-footer-btns">
+            <button class="sap-btn" onclick="callScreen(1000)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>EXIT</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(1002)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>BACK</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1004: ADVANCED SEARCH BOOK -->
+      <div id="screen-1004" class="sap-frame" style="display: none; max-width: 960px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM - SEARCH BOOKS DETAILS</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="sap-btn sap-btn-sm" onclick="openAddBookModal()" title="Add custom book to catalog">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>+ ADD BOOK</span>
+            </button>
+            <button class="sap-btn sap-btn-sm" onclick="callScreen(1000)">LOGOUT</button>
+          </div>
+        </div>
+        <div class="sap-frame-body">
+          
+          <!-- Category Quick Filter Pills -->
+          <div class="category-pills">
+            <span class="cat-pill active" onclick="filterByCategory('ALL', this)">ALL CATEGORIES</span>
+            <span class="cat-pill" onclick="filterByCategory('COMP', this)">💻 COMPUTER SCIENCE</span>
+            <span class="cat-pill" onclick="filterByCategory('SAP', this)">🏢 SAP & ENTERPRISE</span>
+            <span class="cat-pill" onclick="filterByCategory('SCIFI', this)">🚀 SCI-FI & CLASSICS</span>
+            <span class="cat-pill" onclick="filterByCategory('SCIENCE', this)">🔬 SCIENCE & MATH</span>
+            <span class="cat-pill" onclick="filterByCategory('MINDSET', this)">🧠 BUSINESS & MINDSET</span>
+          </div>
+
+          <!-- Fast Live Search Bar -->
+          <div style="background: #edf3fa; padding: 10px 14px; border: 1px solid #bed3e8; border-radius: 2px; margin-bottom: 10px;">
+            <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-weight: 600; font-size: 11px;">BOOK TITLE :</span>
+                <input type="text" id="search-book-name" class="sap-input" style="width: 220px;" placeholder="Type to search..." oninput="debouncedSearch()">
+              </div>
+              <div style="color: #2563eb; font-weight: 700; font-size: 11px;">OR</div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-weight: 600; font-size: 11px;">AUTHOR :</span>
+                <input type="text" id="search-author-name" class="sap-input" style="width: 170px;" placeholder="Search author..." oninput="debouncedSearch()">
+              </div>
+              <button class="sap-btn" onclick="executeBookSearch()" style="padding: 4px 12px;">
+                <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>FILTER</span>
+              </button>
+              <button class="sap-btn" onclick="clearSearchFilter()" style="padding: 4px 10px;">
+                <span>CLEAR</span>
+              </button>
+              <span id="search-count-badge" style="margin-left: auto; font-size: 11px; color: #475569; font-weight: 600;">Showing 0 books</span>
+            </div>
+          </div>
+
+          <!-- TableControl LIB1 -->
+          <div class="sap-tablecontrol-container">
+            <table class="sap-table" id="table-lib1">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">BOOK ID</th>
+                  <th>BOOK TITLE</th>
+                  <th>CATEGORY</th>
+                  <th>AUTHOR</th>
+                  <th style="width: 80px;">PRICE</th>
+                  <th style="width: 90px; text-align: center;">STATUS</th>
+                  <th style="width: 100px; text-align: center;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="table-lib1-body">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="screen-footer-btns" style="margin-top: 18px;">
+            <button class="sap-btn" onclick="callScreen(1001)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>BACK</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(0)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>EXIT</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1005: GET BOOK -->
+      <div id="screen-1005" class="sap-frame" style="display: none; max-width: 800px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM - GET BOOK</span>
+          <button class="sap-btn" style="padding: 2px 8px; font-size: 10px;" onclick="callScreen(0)">EXIT</button>
+        </div>
+        <div class="sap-frame-body">
+          <div style="max-width: 580px; margin: 0 auto;">
+            
+            <div style="background: #edf3fa; border: 1px solid #c0d3e5; padding: 12px; border-radius: 2px; margin-bottom: 16px;">
+              <div class="sap-form-row" style="margin-bottom: 8px;">
+                <span class="sap-label" style="width: 150px;">QUICK CHOOSE BOOK:</span>
+                <select id="getbook-dropdown" onchange="handleDropdownBookSelect()" style="width: 320px; padding: 5px; font-size: 11.5px; border: 1px solid #7f9db9; border-radius: 1px; font-family: var(--sap-font); outline: none;">
+                  <option value="">-- Choose from Catalog --</option>
+                </select>
+              </div>
+              <div class="sap-form-row" style="margin-bottom: 0;">
+                <span class="sap-label" style="width: 150px;">OR ENTER BOOK ID:</span>
+                <input type="number" id="getbook-input-id" class="sap-input" style="width: 140px;" placeholder="e.g. 1" onkeydown="if(event.key==='Enter') lookupBookForBorrow()">
+                <button class="sap-btn" onclick="lookupBookForBorrow()" style="margin-left: 8px;">
+                  <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>LOOKUP</span>
+                </button>
+              </div>
+            </div>
+
+            <div style="background: #ffffff; padding: 16px; border: 1px solid #c0d3e5; border-radius: 2px;">
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">STUDENT ID :</span>
+                <input type="text" id="getbook-stu-id" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">BOOK ID :</span>
+                <input type="text" id="getbook-book-id" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">BOOK NAME :</span>
+                <input type="text" id="getbook-book-name" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">AUTHOR :</span>
+                <input type="text" id="getbook-author" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">DATE :</span>
+                <input type="text" id="getbook-date" class="sap-input" readonly>
+              </div>
+            </div>
+
+            <div style="margin: 18px 0 10px; text-align: center;">
+              <button class="sap-btn sap-btn-lg sap-btn-success" onclick="executeGetBook()" style="min-width: 200px;">
+                <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>CONFIRM ISSUE (GET BOOK)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="screen-footer-btns">
+            <button class="sap-btn" onclick="callScreen(1000)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+              <span>LOGOUT</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(1001)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>BACK</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1006: RETURN BOOK -->
+      <div id="screen-1006" class="sap-frame" style="display: none; max-width: 780px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM - RETURN BOOK</span>
+          <button class="sap-btn" style="padding: 2px 8px; font-size: 10px;" onclick="callScreen(0)">EXIT</button>
+        </div>
+        <div class="sap-frame-body">
+          <div style="max-width: 520px; margin: 0 auto;">
+            <div class="sap-form-row">
+              <span class="sap-label">ENTER GET ID :</span>
+              <input type="number" id="retbook-input-getid" class="sap-input" style="width: 140px;" placeholder="e.g. 1" onkeydown="if(event.key==='Enter') lookupGetBookRecord()">
+              <button class="sap-btn" onclick="lookupGetBookRecord()" style="margin-left: 10px;">
+                <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>OK</span>
+              </button>
+            </div>
+
+            <div style="background: #edf3fa; padding: 16px; border: 1px solid #c0d3e5; border-radius: 2px; margin-top: 14px;">
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">GET ID :</span>
+                <input type="text" id="ret-get-id" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">STUDENT ID :</span>
+                <input type="text" id="ret-stu-id" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">BOOK ID :</span>
+                <input type="text" id="ret-book-id" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">BOOK NAME :</span>
+                <input type="text" id="ret-book-name" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">AUTHOR :</span>
+                <input type="text" id="ret-author" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">RECEIVE DATE :</span>
+                <input type="text" id="ret-rec-date" class="sap-input" readonly>
+              </div>
+              <div class="sap-form-row">
+                <span class="sap-label" style="width: 140px;">RETURN DATE :</span>
+                <input type="text" id="ret-ret-date" class="sap-input" readonly>
+              </div>
+            </div>
+
+            <div style="margin: 20px 0 10px; text-align: center;">
+              <button class="sap-btn sap-btn-lg" onclick="executeReturnBook()" style="min-width: 180px;">
+                <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                <span>RETURN BOOK</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="screen-footer-btns">
+            <button class="sap-btn" onclick="callScreen(1000)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+              <span>LOGOUT</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(1001)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>BACK</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1007: SHOW BOOK -->
+      <div id="screen-1007" class="sap-frame" style="display: none; max-width: 960px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM - SHOW BOOK</span>
+          <button class="sap-btn" style="padding: 2px 8px; font-size: 10px;" onclick="callScreen(0)">EXIT</button>
+        </div>
+        <div class="sap-frame-body">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 11.5px; color: #334155;">
+              Active borrowed books for: <b id="show-book-stu-name" style="color: #1e40af;">SIBI</b> (Student ID: <b id="show-book-stu-id-label">1</b>)
+            </div>
+            <button class="sap-btn sap-btn-sm" onclick="callScreen(1005)">+ BORROW ANOTHER BOOK</button>
+          </div>
+
+          <!-- TableControl EDWR -->
+          <div class="sap-tablecontrol-container" style="min-height: 240px;">
+            <table class="sap-table" id="table-edwr">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">GET ID</th>
+                  <th>BOOK TITLE</th>
+                  <th>AUTHOR</th>
+                  <th>ISSUED DATE</th>
+                  <th>FIELD</th>
+                  <th style="width: 110px; text-align: center;">QUICK ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="table-edwr-body">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="screen-footer-btns" style="margin-top: 24px;">
+            <button class="sap-btn" onclick="callScreen(1000)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+              <span>LOGOUT</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(1001)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>BACK</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1008: UPDATE PROFILE -->
+      <div id="screen-1008" class="sap-frame" style="display: none; max-width: 760px;">
+        <div class="sap-frame-header">
+          <span>LIBRARY MANAGEMENT SYSTEM - UPDATE PROFILE</span>
+          <button class="sap-btn" style="padding: 2px 8px; font-size: 10px;" onclick="callScreen(1000)">LOGOUT</button>
+        </div>
+        <div class="sap-frame-body">
+          <div style="max-width: 560px; margin: 0 auto;">
+            <div class="sap-form-row">
+              <span class="sap-label">ROLLNO :</span>
+              <input type="text" id="upd-roll" class="sap-input">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">NAME :</span>
+              <input type="text" id="upd-name" class="sap-input">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">GENDER :</span>
+              <input type="text" id="upd-gender" class="sap-input">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">DEGREE :</span>
+              <input type="text" id="upd-degree" class="sap-input">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">FIELD :</span>
+              <input type="text" id="upd-field" class="sap-input">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">SESSION :</span>
+              <input type="text" id="upd-session" class="sap-input" placeholder="e.g. 2022-2026">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">ADDRESS :</span>
+              <input type="text" id="upd-address" class="sap-input">
+            </div>
+            <div class="sap-form-row">
+              <span class="sap-label">DATE & TIME :</span>
+              <input type="text" id="upd-datetime" class="sap-input" readonly>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 16px; margin-top: 20px;">
+              <button class="sap-btn sap-btn-lg" onclick="executeUpdateProfile()">
+                <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>UPDATE</span>
+              </button>
+              <button class="sap-btn" onclick="callScreen(1001)">
+                <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>CANCEL</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="screen-footer-btns">
+            <button class="sap-btn" onclick="callScreen(0)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>EXIT</span>
+            </button>
+            <button class="sap-btn" onclick="callScreen(1001)">
+              <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>BACK</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SAP Status Bar -->
+    <div class="sap-statusbar">
+      <div class="sap-sb-msg" id="status-bar-message">
+        <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span id="status-bar-text">System ready</span>
+      </div>
+      <div class="sap-sb-system">
+        <span class="sap-sb-pane" id="sb-prog">ZA16_LIBRARY</span>
+        <span class="sap-sb-pane" id="sb-screen">Dynpro 1000</span>
+        <span class="sap-sb-pane">ERPLOGIC</span>
+        <span class="sap-sb-pane">INS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAP Information Modal / Message Popup -->
+  <div class="sap-dialog-overlay" id="sap-dialog-overlay">
+    <div class="sap-dialog">
+      <div class="sap-dialog-header">
+        <span id="dialog-title">SAP Information</span>
+        <div style="cursor: pointer;" onclick="closeDialog()">✕</div>
+      </div>
+      <div class="sap-dialog-body">
+        <div id="dialog-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div id="dialog-message" style="font-weight: 500;">Message text</div>
+      </div>
+      <div class="sap-dialog-footer">
+        <button class="sap-btn" onclick="closeDialog()" style="min-width: 70px;">
+          <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>OK</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add New Book (SE11 ZA16_L_BOOK_INFO Insert) -->
+  <div class="sap-dialog-overlay" id="add-book-modal">
+    <div class="sap-dialog" style="width: 480px;">
+      <div class="sap-dialog-header">
+        <span>Insert New Book (ZA16_L_BOOK_INFO)</span>
+        <div style="cursor: pointer;" onclick="closeAddBookModal()">✕</div>
+      </div>
+      <div style="padding: 18px 22px;">
+        <div class="sap-form-row">
+          <span class="sap-label" style="width: 120px;">TITLE :</span>
+          <input type="text" id="new-book-title" class="sap-input" placeholder="e.g. Design Patterns">
+        </div>
+        <div class="sap-form-row">
+          <span class="sap-label" style="width: 120px;">AUTHOR :</span>
+          <input type="text" id="new-book-author" class="sap-input" placeholder="Author name">
+        </div>
+        <div class="sap-form-row">
+          <span class="sap-label" style="width: 120px;">CATEGORY :</span>
+          <select id="new-book-category" style="width: 260px; padding: 5px; font-size: 11.5px; border: 1px solid #7f9db9;">
+            <option value="COMP">Computer Science</option>
+            <option value="SAP">SAP & Enterprise</option>
+            <option value="SCIFI">Sci-Fi & Classics</option>
+            <option value="SCIENCE">Science & Math</option>
+            <option value="MINDSET">Business & Mindset</option>
+          </select>
+        </div>
+        <div class="sap-form-row">
+          <span class="sap-label" style="width: 120px;">PRICE ($) :</span>
+          <input type="number" id="new-book-price" class="sap-input" placeholder="e.g. 45.00" value="39.99">
+        </div>
+      </div>
+      <div class="sap-dialog-footer">
+        <button class="sap-btn" onclick="saveNewBook()">
+          <svg class="sap-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>INSERT INTO TABLE</span>
+        </button>
+        <button class="sap-btn" onclick="closeAddBookModal()">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side Drawer: SE11 Database Tables Inspector -->
+  <div class="side-drawer" id="drawer-se11">
+    <div class="side-drawer-header">
+      <div class="side-drawer-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <span>Data Dictionary (SE11) Tables</span>
+      </div>
+      <button onclick="toggleDrawer('se11')" style="background: none; border: none; color: #94a3b8; font-size: 16px; cursor: pointer;">✕</button>
+    </div>
+    <div class="side-drawer-body">
+      <div style="margin-bottom: 12px; display: flex; gap: 8px;">
+        <select id="se11-table-select" onchange="renderSe11Table()" style="background: #090d16; color: #38bdf8; border: 1px solid #374151; padding: 6px 10px; border-radius: 4px; font-family: var(--sap-mono); font-size: 12px;">
+          <option value="za16_l_book_info">ZA16_L_BOOK_INFO (Book Catalog)</option>
+          <option value="za16_l_getbook">ZA16_L_GETBOOK (Issued Books)</option>
+          <option value="za16_l_login">ZA16_L_LOGIN (User Logins)</option>
+          <option value="za16_l_info">ZA16_L_INFO (Student Profiles)</option>
+        </select>
+      </div>
+      <div id="se11-table-view" style="overflow-x: auto;"></div>
+    </div>
+  </div>
+
+  <!-- Side Drawer: Screen ABAP Code Inspector -->
+  <div class="side-drawer" id="drawer-abap">
+    <div class="side-drawer-header">
+      <div class="side-drawer-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span id="abap-drawer-title">Screen 1000 ABAP Logic</span>
+      </div>
+      <button onclick="toggleDrawer('abap')" style="background: none; border: none; color: #94a3b8; font-size: 16px; cursor: pointer;">✕</button>
+    </div>
+    <div class="side-drawer-body">
+      <div style="margin-bottom: 10px; color: #94a3b8; font-size: 11px;">
+        Active Include: <span id="abap-active-include" style="color: #38bdf8; font-weight: bold;">ZA16_LOGIN_PAGE.ABAP</span>
+      </div>
+      <div class="abap-code-block" id="abap-code-content"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       ABAP CODE SNIPPETS FOR INSPECTOR
+       ========================================================================== */
+    const ABAP_CODE_MAP = {
+      1000: {
+        include: 'INCLUDE ZA16_LOGIN_PAGE.ABAP',
+        code: `MODULE STATUS_1000 OUTPUT.
+  CLEAR: wa_login, wa_login.
+ENDMODULE.
+
+MODULE USER_COMMAND_1000 INPUT.
+  CASE sy-ucomm.
+    WHEN 'LOGIN'.
+      SELECT SINGLE * FROM za16_l_login INTO wa_login
+        WHERE user_id = user_id
+          AND password = password.
+      IF sy-subrc = 0.
+        CALL SCREEN 1001.
+      ELSE.
+        MESSAGE 'ENTER THE CORRECT VALUE' TYPE 'I'.
+      ENDIF.
+    WHEN 'NEW'.
+      LEAVE TO SCREEN 1002.
+    WHEN 'EXIT'.
+      CALL SCREEN 0.
+  ENDCASE.
+ENDMODULE.`
+      },
+      1001: {
+        include: 'INCLUDE ZA16_HOME_PAGE.ABAP',
+        code: `MODULE STATUS_1001 OUTPUT.
+  SELECT SINGLE name FROM za16_l_info INTO NAME WHERE stu_id = stu_id.
+ENDMODULE.
+
+MODULE USER_COMMAND_1001 INPUT.
+  CASE sy-ucomm.
+    WHEN 'SEARCH'. CALL SCREEN 1004.
+    WHEN 'GET'.    CALL SCREEN 1005.
+    WHEN 'RETURN'. CALL SCREEN 1006.
+    WHEN 'SHOW'.   LEAVE TO SCREEN 1007.
+    WHEN 'UPDATE'. CALL SCREEN 1008.
+  ENDCASE.
+ENDMODULE.`
+      },
+      1002: {
+        include: 'INCLUDE ZA16_REGISTRATION_PAGE.ABAP (Step 1)',
+        code: `MODULE USER_COMMAND_1002 INPUT.
+  IF sy-ucomm = 'SUBMIT'.
+    SELECT SINGLE * FROM za16_l_login INTO match_data WHERE user_id = phone.
+    IF sy-subrc IS NOT INITIAL.
+      IF phone IS NOT INITIAL AND pass IS NOT INITIAL AND pass2 IS NOT INITIAL.
+        IF pass EQ pass2.
+          SELECT MAX( stu_id ) INTO stu_id FROM za16_l_login.
+          stu_id = stu_id + 1.
+          INSERT za16_l_login FROM wa_login.
+          CALL SCREEN 1003.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+  ENDIF.
+ENDMODULE.`
+      },
+      1003: {
+        include: 'INCLUDE ZA16_REGISTRATION_PAGE.ABAP (Step 2)',
+        code: `MODULE USER_COMMAND_1003 INPUT.
+  IF sy-ucomm = 'SUBMIT'.
+    INSERT za16_l_info FROM wa_info.
+    MESSAGE 'SUCCESSFULLY REGISTERED' TYPE 'S'.
+    CALL SCREEN 1001.
+  ENDIF.
+ENDMODULE.`
+      },
+      1004: {
+        include: 'INCLUDE ZA16_SEARCH_BOOK.ABAP & TABLECONTROL LIB1',
+        code: `MODULE USER_COMMAND_1004 INPUT.
+  IF sy-ucomm = 'SEARCH'.
+    IF wa_book IS NOT INITIAL.
+      SELECT * FROM za16_l_book_info INTO CORRESPONDING FIELDS OF TABLE it_book
+        WHERE book_name = wa_book-book_name OR author = wa_book-author.
+    ENDIF.
+  ENDIF.
+ENDMODULE.`
+      },
+      1005: {
+        include: 'MODULE STATUS_1005 / FORM GT_BOOK in ZA16_LIBRARY_MANAGEMENT.ABAP',
+        code: `FORM GT_BOOK.
+  IF bk_id IS NOT INITIAL.
+    SELECT SINGLE * FROM za16_l_book_info INTO CORRESPONDING FIELDS OF wa_book3
+      WHERE book_id = bk_id.
+    wa_get-mandt = sy-uname.
+    wa_get-get_id = get_id2 + 1.
+    wa_get-stu_id = s_id.
+    wa_get-book_id = b_id.
+    wa_get-book_name = b_name.
+    wa_get-author = b_author.
+    wa_get-car_date = cr_dat2.
+    INSERT za16_l_getbook FROM wa_get.
+  ENDIF.
+ENDFORM.`
+      },
+      1006: {
+        include: 'MODULE USER_COMMAND_1006',
+        code: `MODULE USER_COMMAND_1006 INPUT.
+  IF sy-ucomm = 'RETURN'.
+    DELETE FROM za16_l_getbook WHERE get_id = get_id2.
+    MESSAGE 'BOOK RETURNED SUCCESSFULLY' TYPE 'S'.
+  ENDIF.
+ENDMODULE.`
+      },
+      1007: {
+        include: 'MODULE STATUS_1007 in ZA16_LIBRARY_MANAGEMENT.ABAP',
+        code: `MODULE STATUS_1007 OUTPUT.
+  SELECT za16_l_info~stu_id
+         za16_l_info~user_id
+         za16_l_info~name
+         za16_l_info~roll
+         za16_l_info~field
+         za16_l_getbook~get_id
+         za16_l_getbook~book_id
+         za16_l_getbook~author
+         za16_l_getbook~car_date
+    INTO CORRESPONDING FIELDS OF it_join
+    FROM za16_l_info INNER JOIN za16_l_getbook
+    ON za16_l_info~stu_id = za16_l_getbook~stu_id
+    WHERE za16_l_info~stu_id = stu_id.
+  ENDSELECT.
+ENDMODULE.`
+      },
+      1008: {
+        include: 'INCLUDE ZA16_UPDATE_PROFILE.ABAP',
+        code: `MODULE USER_COMMAND_1008 INPUT.
+  IF sy-ucomm = 'UPDATE'.
+    UPDATE za16_l_info FROM wa_update.
+    MESSAGE 'SUCCESSFUL UPDATED' TYPE 'S'.
+    LEAVE TO SCREEN 1001.
+  ENDIF.
+ENDMODULE.`
+      }
+    };
+
+    /* ==========================================================================
+       EXPANDED MASTER BOOK CATALOG (40+ Famous & Diverse Titles Across Categories)
+       ========================================================================== */
+    const MASTER_BOOKS = [
+      // COMPUTER SCIENCE & PROGRAMMING
+      { mandt: '800', book_id: 1, book_name: 'HOW TO HACK WIFI', author: 'SIBI', prices: '45.00', cat: 'COMP' },
+      { mandt: '800', book_id: 2, book_name: 'HOW TO USE LINUX', author: 'RAJ', prices: '30.00', cat: 'COMP' },
+      { mandt: '800', book_id: 3, book_name: 'CLEAN CODE: A HANDBOOK OF AGILE SOFTWARE CRAFTSMANSHIP', author: 'ROBERT C. MARTIN', prices: '48.50', cat: 'COMP' },
+      { mandt: '800', book_id: 4, book_name: 'THE PRAGMATIC PROGRAMMER: 20TH ANNIVERSARY EDITION', author: 'ANDY HUNT & DAVE THOMAS', prices: '49.99', cat: 'COMP' },
+      { mandt: '800', book_id: 5, book_name: 'DESIGN PATTERNS: ELEMENTS OF REUSABLE OBJECT-ORIENTED SOFTWARE', author: 'GOF (GAMMA, HELM, JOHNSON, VLISSIDES)', prices: '54.00', cat: 'COMP' },
+      { mandt: '800', book_id: 6, book_name: 'INTRODUCTION TO ALGORITHMS (CLRS) 4TH ED', author: 'T. CORMEN, C. LEISERSON, R. RIVEST', prices: '89.00', cat: 'COMP' },
+      { mandt: '800', book_id: 7, book_name: 'STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS (SICP)', author: 'HAROLD ABELSON & GERALD SUSSMAN', prices: '62.00', cat: 'COMP' },
+      { mandt: '800', book_id: 8, book_name: 'DESIGNING DATA-INTENSIVE APPLICATIONS', author: 'MARTIN KLEPPMANN', prices: '52.00', cat: 'COMP' },
+      { mandt: '800', book_id: 9, book_name: 'REFACTORING: IMPROVING THE DESIGN OF EXISTING CODE', author: 'MARTIN FOWLER', prices: '47.50', cat: 'COMP' },
+      { mandt: '800', book_id: 10, book_name: 'YOU DONT KNOW JS YET: GET STARTED', author: 'KYLE SIMPSON', prices: '28.00', cat: 'COMP' },
+      { mandt: '800', book_id: 11, book_name: 'COMPUTER SYSTEMS: A PROGRAMMERS PERSPECTIVE', author: 'RANDAL BRYANT & DAVID OHALLARON', prices: '78.00', cat: 'COMP' },
+      { mandt: '800', book_id: 12, book_name: 'THE ART OF COMPUTER PROGRAMMING: VOL 1', author: 'DONALD E. KNUTH', prices: '95.00', cat: 'COMP' },
+
+      // SAP & ENTERPRISE ARCHITECTURE
+      { mandt: '800', book_id: 13, book_name: 'SAP ABAP COMPLETE REFERENCE: CONCEPTS & PROGRAMMING', author: 'J. KIRCHNER', prices: '75.00', cat: 'SAP' },
+      { mandt: '800', book_id: 14, book_name: 'DESIGN PATTERNS IN ABAP OBJECTS', author: 'K. ADAMS', prices: '60.00', cat: 'SAP' },
+      { mandt: '800', book_id: 15, book_name: 'SAP FIORI & UI5 ARCHITECTURE', author: 'M. VOGEL', prices: '55.00', cat: 'SAP' },
+      { mandt: '800', book_id: 16, book_name: 'SAP S/4HANA ARCHITECTURE & CONVERSION ROADMAP', author: 'STEFAN BAUMGARTNER', prices: '82.00', cat: 'SAP' },
+      { mandt: '800', book_id: 17, book_name: 'SAP HANA 2.0: SYSTEM ADMINISTRATION & PERFORMANCE', author: 'DENYS VAN KEMPEN', prices: '74.00', cat: 'SAP' },
+      { mandt: '800', book_id: 18, book_name: 'CORE DATA SERVICES (CDS) IN SAP S/4HANA', author: 'BORIS GEBHARDT', prices: '68.50', cat: 'SAP' },
+      { mandt: '800', book_id: 19, book_name: 'SAP ABAP RESTFUL APPLICATION PROGRAMMING MODEL (RAP)', author: 'ANDRE FISCHER', prices: '69.00', cat: 'SAP' },
+      { mandt: '800', book_id: 20, book_name: 'SAP INTEGRATION SUITE: HYBRID ARCHITECTURES', author: 'CHRISTOPHER AARON', prices: '64.00', cat: 'SAP' },
+
+      // SCI-FI, FANTASY & TIMELESS CLASSICS
+      { mandt: '800', book_id: 21, book_name: 'DUNE (CHRONICLES OF ARRAKIS)', author: 'FRANK HERBERT', prices: '24.99', cat: 'SCIFI' },
+      { mandt: '800', book_id: 22, book_name: 'FOUNDATION (THE FOUNDATION TRILOGY)', author: 'ISAAC ASIMOV', prices: '22.00', cat: 'SCIFI' },
+      { mandt: '800', book_id: 23, book_name: '1984: CENTENNIAL EDITION', author: 'GEORGE ORWELL', prices: '18.50', cat: 'SCIFI' },
+      { mandt: '800', book_id: 24, book_name: 'BRAVE NEW WORLD', author: 'ALDOUS HUXLEY', prices: '19.00', cat: 'SCIFI' },
+      { mandt: '800', book_id: 25, book_name: 'THE HOBBIT: OR THERE AND BACK AGAIN', author: 'J.R.R. TOLKIEN', prices: '23.00', cat: 'SCIFI' },
+      { mandt: '800', book_id: 26, book_name: 'THE LORD OF THE RINGS: THE FELLOWSHIP OF THE RING', author: 'J.R.R. TOLKIEN', prices: '35.00', cat: 'SCIFI' },
+      { mandt: '800', book_id: 27, book_name: 'NEUROMANCER (THE SPRAWL TRILOGY)', author: 'WILLIAM GIBSON', prices: '21.50', cat: 'SCIFI' },
+      { mandt: '800', book_id: 28, book_name: 'FAHRENHEIT 451', author: 'RAY BRADBURY', prices: '17.99', cat: 'SCIFI' },
+      { mandt: '800', book_id: 29, book_name: 'DO ANDROIDS DREAM OF ELECTRIC SHEEP?', author: 'PHILIP K. DICK', prices: '20.00', cat: 'SCIFI' },
+      { mandt: '800', book_id: 30, book_name: 'THE HITCHHIKERS GUIDE TO THE GALAXY', author: 'DOUGLAS ADAMS', prices: '18.00', cat: 'SCIFI' },
+
+      // SCIENCE, MATHEMATICS & PHYSICS
+      { mandt: '800', book_id: 31, book_name: 'A BRIEF HISTORY OF TIME', author: 'STEPHEN HAWKING', prices: '22.50', cat: 'SCIENCE' },
+      { mandt: '800', book_id: 32, book_name: 'THE SELFISH GENE', author: 'RICHARD DAWKINS', prices: '24.00', cat: 'SCIENCE' },
+      { mandt: '800', book_id: 33, book_name: 'COSMOS: A PERSONAL VOYAGE', author: 'CARL SAGAN', prices: '26.00', cat: 'SCIENCE' },
+      { mandt: '800', book_id: 34, book_name: 'THE ELEGANT UNIVERSE: SUPERSTRINGS AND TIME', author: 'BRIAN GREENE', prices: '23.50', cat: 'SCIENCE' },
+      { mandt: '800', book_id: 35, book_name: 'WHAT IS LIFE? WITH MIND AND MATTER', author: 'ERWIN SCHRODINGER', prices: '19.50', cat: 'SCIENCE' },
+      { mandt: '800', book_id: 36, book_name: 'SIX EASY PIECES: ESSENTIALS OF PHYSICS', author: 'RICHARD P. FEYNMAN', prices: '21.00', cat: 'SCIENCE' },
+
+      // BUSINESS, PSYCHOLOGY & MINDSET
+      { mandt: '800', book_id: 37, book_name: 'ATOMIC HABITS: TINY CHANGES REMARKABLE RESULTS', author: 'JAMES CLEAR', prices: '27.00', cat: 'MINDSET' },
+      { mandt: '800', book_id: 38, book_name: 'THINKING, FAST AND SLOW', author: 'DANIEL KAHNEMAN', prices: '29.00', cat: 'MINDSET' },
+      { mandt: '800', book_id: 39, book_name: 'DEEP WORK: RULES FOR FOCUSED SUCCESS', author: 'CAL NEWPORT', prices: '25.00', cat: 'MINDSET' },
+      { mandt: '800', book_id: 40, book_name: 'THE PSYCHOLOGY OF MONEY', author: 'MORGAN HOUSEL', prices: '23.00', cat: 'MINDSET' },
+      { mandt: '800', book_id: 41, book_name: 'ZERO TO ONE: NOTES ON STARTUPS', author: 'PETER THIEL', prices: '24.50', cat: 'MINDSET' },
+      { mandt: '800', book_id: 42, book_name: 'MEDITATIONS: A NEW TRANSLATION', author: 'MARCUS AURELIUS', prices: '16.50', cat: 'MINDSET' },
+      { mandt: '800', book_id: 43, book_name: 'MANS SEARCH FOR MEANING', author: 'VIKTOR E. FRANKL', prices: '18.00', cat: 'MINDSET' },
+      { mandt: '800', book_id: 44, book_name: 'THE ART OF WAR', author: 'SUN TZU', prices: '15.00', cat: 'MINDSET' }
+    ];
+
+    /* ==========================================================================
+       INITIAL DATA DICTIONARY (SE11) SEED DATA
+       ========================================================================== */
+    const INITIAL_DB = {
+      za16_l_login: [
+        { mandt: '800', stu_id: 1, user_id: 'SIBI', password: 'password123' },
+        { mandt: '800', stu_id: 2, user_id: 'RAJ', password: 'raj123' }
+      ],
+      za16_l_info: [
+        {
+          mandt: '800',
+          stu_id: 1,
+          user_id: 'SIBI',
+          roll: 101,
+          name: 'SIBI_SR',
+          gender: 'MALE',
+          degree: 'B.TECH',
+          field: 'COMPUTER SCIENCE',
+          address: '42 TECH PARK RESIDENCY, CAMPUS ROAD',
+          date_and_time: '28/02/2022'
+        },
+        {
+          mandt: '800',
+          stu_id: 2,
+          user_id: 'RAJ',
+          roll: 102,
+          name: 'RAJESH KUMAR',
+          gender: 'MALE',
+          degree: 'B.TECH',
+          field: 'INFORMATION TECHNOLOGY',
+          address: '15 LAKE VIEW HOSTEL',
+          date_and_time: '15/03/2022'
+        }
+      ],
+      za16_l_book_info: JSON.parse(JSON.stringify(MASTER_BOOKS)),
+      za16_l_getbook: [
+        {
+          mandt: '800',
+          get_id: 1,
+          stu_id: 1,
+          book_id: 1,
+          book_name: 'HOW TO HACK WIFI',
+          author: 'SIBI',
+          addition: '1st Edition',
+          car_date: '28/02/2022',
+          return_date: ''
+        },
+        {
+          mandt: '800',
+          get_id: 2,
+          stu_id: 1,
+          book_id: 3,
+          book_name: 'CLEAN CODE: A HANDBOOK OF AGILE SOFTWARE CRAFTSMANSHIP',
+          author: 'ROBERT C. MARTIN',
+          addition: '1st Edition',
+          car_date: '05/03/2022',
+          return_date: ''
+        }
+      ]
+    };
+
+    /* ==========================================================================
+       APP STATE & RUNTIME
+       ========================================================================== */
+    let db = {};
+    let currentScreen = 1000;
+    let currentStudent = null;
+    let pendingReg = null;
+    let currentCategory = 'ALL';
+    let searchDebounceTimer = null;
+
+    function loadDatabase() {
+      const stored = localStorage.getItem('SAP_ZA16_DB');
+      if (stored) {
+        try {
+          db = JSON.parse(stored);
+          // Migration: If existing db has fewer books, merge with master catalog
+          if (!db.za16_l_book_info || db.za16_l_book_info.length < MASTER_BOOKS.length) {
+            db.za16_l_book_info = JSON.parse(JSON.stringify(MASTER_BOOKS));
+            saveDatabase();
+          }
+        } catch (e) {
+          db = JSON.parse(JSON.stringify(INITIAL_DB));
+        }
+      } else {
+        db = JSON.parse(JSON.stringify(INITIAL_DB));
+        saveDatabase();
+      }
+    }
+
+    function saveDatabase() {
+      localStorage.setItem('SAP_ZA16_DB', JSON.stringify(db));
+      renderSe11Table();
+    }
+
+    function resetMockDatabase() {
+      if (confirm("Reset SAP Database to default catalog with 44+ famous books?")) {
+        db = JSON.parse(JSON.stringify(INITIAL_DB));
+        saveDatabase();
+        showStatusMessage("SAP Database reset to initial state with 44 books", "info");
+        executeBookSearch();
+        callScreen(1000);
+      }
+    }
+
+    function getTodayFormatted() {
+      const d = new Date();
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+
+    /* Screen Transitions */
+    function callScreen(screenNumber) {
+      if (screenNumber === 0) {
+        showDialog("Program Terminated", "Session ended (LEAVE TO SCREEN 0). Returning to Screen 1000.");
+        callScreen(1000);
+        return;
+      }
+
+      const screens = [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008];
+      screens.forEach(s => {
+        const el = document.getElementById(`screen-${s}`);
+        if (el) el.style.display = 'none';
+      });
+
+      const target = document.getElementById(`screen-${screenNumber}`);
+      if (target) {
+        target.style.display = 'flex';
+        currentScreen = screenNumber;
+      }
+
+      document.getElementById('current-screen-badge').innerText = `Dynpro ${screenNumber} (${getScreenName(screenNumber)})`;
+      document.getElementById('current-screen-tag').innerText = `Screen ${screenNumber}`;
+      document.getElementById('sb-screen').innerText = `Dynpro ${screenNumber}`;
+      document.getElementById('window-title-text').innerText = `ZA16_LIBRARY_MANAGEMENT - Screen ${screenNumber} [${getScreenName(screenNumber)}]`;
+
+      processBeforeOutput(screenNumber);
+      updateAbapCodeDrawer(screenNumber);
+    }
+
+    function getScreenName(sn) {
+      const names = {
+        1000: 'LOGIN PAGE',
+        1001: 'HOME PAGE',
+        1002: 'REGISTRATION PAGE 1',
+        1003: 'REGISTRATION PAGE 2',
+        1004: 'SEARCH BOOK',
+        1005: 'GET BOOK',
+        1006: 'RETURN BOOK',
+        1007: 'SHOW BOOK',
+        1008: 'UPDATE PROFILE'
+      };
+      return names[sn] || 'DYNPRO';
+    }
+
+    /* PBO (Process Before Output) */
+    function processBeforeOutput(screen) {
+      switch (screen) {
+        case 1000:
+          showStatusMessage("Enter User ID and Password, or click CREATE NEW ACCOUNT", "info");
+          break;
+        case 1001:
+          if (currentStudent) {
+            document.getElementById('home-welcome-name').value = currentStudent.name || currentStudent.user_id;
+            showStatusMessage(`Welcome ${currentStudent.name} (Student ID: ${currentStudent.stu_id})`, "success");
+          }
+          break;
+        case 1002:
+          document.getElementById('reg1-userid').value = '';
+          document.getElementById('reg1-pass').value = '';
+          document.getElementById('reg1-pass2').value = '';
+          showStatusMessage("Screen 1002: Enter unique user ID and matching passwords", "info");
+          break;
+        case 1003:
+          document.getElementById('reg2-phone').value = pendingReg ? pendingReg.user_id : '';
+          document.getElementById('reg2-date').value = getTodayFormatted();
+          document.getElementById('reg2-name').value = '';
+          document.getElementById('reg2-degree').value = 'B.TECH';
+          document.getElementById('reg2-branch').value = 'COMPUTER SCIENCE';
+          document.getElementById('reg2-roll').value = '';
+          document.getElementById('reg2-address').value = '';
+          showStatusMessage("Screen 1003: Complete student profile details", "info");
+          break;
+        case 1004:
+          executeBookSearch();
+          showStatusMessage("Screen 1004: Filter by title, author, or category", "info");
+          break;
+        case 1005:
+          populateGetBookDropdown();
+          document.getElementById('getbook-input-id').value = '';
+          document.getElementById('getbook-stu-id').value = currentStudent ? currentStudent.stu_id : 1;
+          document.getElementById('getbook-book-id').value = '';
+          document.getElementById('getbook-book-name').value = '';
+          document.getElementById('getbook-author').value = '';
+          document.getElementById('getbook-date').value = getTodayFormatted();
+          showStatusMessage("Screen 1005: Choose a book from dropdown or enter Book ID", "info");
+          break;
+        case 1006:
+          document.getElementById('retbook-input-getid').value = '';
+          document.getElementById('ret-get-id').value = '';
+          document.getElementById('ret-stu-id').value = '';
+          document.getElementById('ret-book-id').value = '';
+          document.getElementById('ret-book-name').value = '';
+          document.getElementById('ret-author').value = '';
+          document.getElementById('ret-rec-date').value = '';
+          document.getElementById('ret-ret-date').value = '';
+          showStatusMessage("Screen 1006: Enter GET ID to process return", "info");
+          break;
+        case 1007:
+          renderShowBookTable();
+          showStatusMessage("Screen 1007: Active issued books from ZA16_L_INFO ⨝ ZA16_L_GETBOOK", "info");
+          break;
+        case 1008:
+          if (currentStudent) {
+            document.getElementById('upd-roll').value = currentStudent.roll || '';
+            document.getElementById('upd-name').value = currentStudent.name || '';
+            document.getElementById('upd-gender').value = currentStudent.gender || 'MALE';
+            document.getElementById('upd-degree').value = currentStudent.degree || '';
+            document.getElementById('upd-field').value = currentStudent.field || '';
+            document.getElementById('upd-session').value = '2022-2026';
+            document.getElementById('upd-address').value = currentStudent.address || '';
+            document.getElementById('upd-datetime').value = currentStudent.date_and_time || getTodayFormatted();
+            showStatusMessage("Screen 1008: Modify fields and click UPDATE", "info");
+          }
+          break;
+      }
+    }
+
+    /* ==========================================================================
+       SCREEN LOGIC & ACTIONS
+       ========================================================================== */
+
+    // SCREEN 1000: Login
+    function executeLogin() {
+      const uId = document.getElementById('login-user-id').value.trim().toUpperCase();
+      const pwd = document.getElementById('login-password').value.trim();
+
+      if (!uId || !pwd) {
+        showDialog("Information", "ENTER THE CORRECT VALUE");
+        showStatusMessage("ENTER THE CORRECT VALUE", "error");
+        return;
+      }
+
+      const user = db.za16_l_login.find(u => u.user_id.toUpperCase() === uId && u.password === pwd);
+
+      if (user) {
+        let info = db.za16_l_info.find(i => i.stu_id === user.stu_id);
+        if (!info) {
+          info = {
+            mandt: '800',
+            stu_id: user.stu_id,
+            user_id: user.user_id,
+            roll: 100 + user.stu_id,
+            name: user.user_id,
+            gender: 'MALE',
+            degree: 'B.TECH',
+            field: 'COMPUTER SCIENCE',
+            address: 'Campus Hostel',
+            date_and_time: getTodayFormatted()
+          };
+          db.za16_l_info.push(info);
+          saveDatabase();
+        }
+        currentStudent = info;
+        showStatusMessage("Login successful (SY-SUBRC = 0)", "success");
+        callScreen(1001);
+      } else {
+        showDialog("SAP Login Error", "ENTER THE CORRECT VALUE");
+        showStatusMessage("Login failed: Invalid credentials", "error");
+      }
+    }
+
+    // SCREEN 1002: Registration Step 1
+    function executeRegistrationStep1() {
+      const phone = document.getElementById('reg1-userid').value.trim().toUpperCase();
+      const pass = document.getElementById('reg1-pass').value.trim();
+      const pass2 = document.getElementById('reg1-pass2').value.trim();
+
+      if (!phone || !pass || !pass2) {
+        showDialog("Registration Error", "PLEASE ENTER THE CURRECT RECORD");
+        showStatusMessage("Fields cannot be blank", "error");
+        return;
+      }
+
+      const exists = db.za16_l_login.find(u => u.user_id.toUpperCase() === phone);
+      if (exists) {
+        showDialog("Registration Error", "THE USER ALREADY EXISTS");
+        showStatusMessage("User already exists", "error");
+        return;
+      }
+
+      if (pass !== pass2) {
+        showDialog("Password Mismatch", "PLEASE ENTER THE CORRECT PASSWORD");
+        showStatusMessage("Passwords do not match", "error");
+        return;
+      }
+
+      const maxStuId = db.za16_l_login.reduce((max, u) => Math.max(max, u.stu_id || 0), 0);
+      const newStuId = maxStuId + 1;
+
+      const newLogin = {
+        mandt: '800',
+        stu_id: newStuId,
+        user_id: phone,
+        password: pass
+      };
+
+      db.za16_l_login.push(newLogin);
+      saveDatabase();
+
+      pendingReg = {
+        stu_id: newStuId,
+        user_id: phone
+      };
+
+      showStatusMessage(`Account created for ${phone}! Complete details.`, "success");
+      callScreen(1003);
+    }
+
+    // SCREEN 1003: Registration Step 2
+    function executeRegistrationStep2() {
+      if (!pendingReg) {
+        callScreen(1000);
+        return;
+      }
+
+      const name = document.getElementById('reg2-name').value.trim();
+      const gender = document.querySelector('input[name="reg2-gender"]:checked')?.value || 'MALE';
+      const phone = document.getElementById('reg2-phone').value.trim();
+      const degree = document.getElementById('reg2-degree').value.trim();
+      const branch = document.getElementById('reg2-branch').value.trim();
+      const roll = parseInt(document.getElementById('reg2-roll').value) || (100 + pendingReg.stu_id);
+      const address = document.getElementById('reg2-address').value.trim();
+      const date = document.getElementById('reg2-date').value;
+
+      if (!name) {
+        showDialog("Required Field", "Please enter student name.");
+        return;
+      }
+
+      const newInfo = {
+        mandt: '800',
+        stu_id: pendingReg.stu_id,
+        user_id: phone || pendingReg.user_id,
+        roll: roll,
+        name: name,
+        gender: gender,
+        degree: degree || 'B.TECH',
+        field: branch || 'ENGINEERING',
+        address: address || 'Campus Dormitory',
+        date_and_time: date
+      };
+
+      db.za16_l_info.push(newInfo);
+      saveDatabase();
+
+      currentStudent = newInfo;
+      pendingReg = null;
+
+      showDialog("Registration Complete", "SUCCESSFULLY REGISTERED");
+      showStatusMessage("SUCCESSFULLY REGISTERED", "success");
+      callScreen(1001);
+    }
+
+    /* Fast Debounced Live Search */
+    function debouncedSearch() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        executeBookSearch();
+      }, 80);
+    }
+
+    function filterByCategory(cat, element) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      if (element) element.classList.add('active');
+      executeBookSearch();
+    }
+
+    function clearSearchFilter() {
+      document.getElementById('search-book-name').value = '';
+      document.getElementById('search-author-name').value = '';
+      filterByCategory('ALL', document.querySelector('.cat-pill'));
+    }
+
+    // SCREEN 1004: Advanced Book Search
+    function executeBookSearch() {
+      const bookName = (document.getElementById('search-book-name')?.value || '').trim().toUpperCase();
+      const authorName = (document.getElementById('search-author-name')?.value || '').trim().toUpperCase();
+
+      let results = db.za16_l_book_info || [];
+
+      // Category filter
+      if (currentCategory !== 'ALL') {
+        results = results.filter(b => b.cat === currentCategory);
+      }
+
+      // Title & Author filter
+      if (bookName || authorName) {
+        results = results.filter(b => {
+          const matchTitle = bookName ? b.book_name.toUpperCase().includes(bookName) : true;
+          const matchAuthor = authorName ? b.author.toUpperCase().includes(authorName) : true;
+          return (bookName ? matchTitle : true) && (authorName ? matchAuthor : true);
+        });
+      }
+
+      const countBadge = document.getElementById('search-count-badge');
+      if (countBadge) countBadge.innerText = `Showing ${results.length} books`;
+
+      const tbody = document.getElementById('table-lib1-body');
+      tbody.innerHTML = '';
+
+      if (results.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 20px;">No books found matching criteria.</td></tr>`;
+        showStatusMessage("BOOK NOT FOUND .....!", "info");
+        return;
+      }
+
+      const issuedSet = new Set(db.za16_l_getbook.map(g => g.book_id));
+      const frag = document.createDocumentFragment();
+
+      results.forEach(b => {
+        const isIssued = issuedSet.has(b.book_id);
+        const tr = document.createElement('tr');
+        
+        const catLabels = {
+          COMP: '💻 CS',
+          SAP: '🏢 SAP',
+          SCIFI: '🚀 SCI-FI',
+          SCIENCE: '🔬 SCIENCE',
+          MINDSET: '🧠 MINDSET'
+        };
+
+        tr.innerHTML = `
+          <td style="font-family: var(--sap-mono); font-weight: bold; color: #0284c7;">#${b.book_id}</td>
+          <td style="font-weight: 600; color: #0f172a;">${b.book_name}</td>
+          <td><span class="badge-cat">${catLabels[b.cat] || 'GENERAL'}</span></td>
+          <td>${b.author}</td>
+          <td style="font-family: var(--sap-mono); font-weight: 600;">$${b.prices}</td>
+          <td style="text-align: center;">
+            <span class="badge-status ${isIssued ? 'badge-issued' : 'badge-available'}">
+              ${isIssued ? 'ISSUED' : 'AVAILABLE'}
+            </span>
+          </td>
+          <td style="text-align: center;">
+            <button class="sap-btn sap-btn-sm ${isIssued ? '' : 'sap-btn-success'}" 
+                    style="padding: 2px 6px; font-size: 10px;"
+                    onclick="quickBorrowFromSearch(${b.book_id})">
+              ${isIssued ? 'DETAILS' : 'GET BOOK'}
+            </button>
+          </td>
+        `;
+        frag.appendChild(tr);
+      });
+
+      tbody.appendChild(frag);
+    }
+
+    function quickBorrowFromSearch(bookId) {
+      callScreen(1005);
+      const dropdown = document.getElementById('getbook-dropdown');
+      if (dropdown) dropdown.value = bookId;
+      document.getElementById('getbook-input-id').value = bookId;
+      lookupBookForBorrow();
+    }
+
+    // Modal: Add Custom Book
+    function openAddBookModal() {
+      document.getElementById('add-book-modal').classList.add('active');
+      document.getElementById('new-book-title').value = '';
+      document.getElementById('new-book-author').value = '';
+    }
+
+    function closeAddBookModal() {
+      document.getElementById('add-book-modal').classList.remove('active');
+    }
+
+    function saveNewBook() {
+      const title = document.getElementById('new-book-title').value.trim().toUpperCase();
+      const author = document.getElementById('new-book-author').value.trim().toUpperCase();
+      const cat = document.getElementById('new-book-category').value;
+      const price = parseFloat(document.getElementById('new-book-price').value) || 29.99;
+
+      if (!title || !author) {
+        showDialog("Input Error", "Please provide both book title and author.");
+        return;
+      }
+
+      const maxId = db.za16_l_book_info.reduce((max, b) => Math.max(max, b.book_id || 0), 0);
+      const newId = maxId + 1;
+
+      const newBook = {
+        mandt: '800',
+        book_id: newId,
+        book_name: title,
+        author: author,
+        prices: price.toFixed(2),
+        cat: cat
+      };
+
+      db.za16_l_book_info.unshift(newBook);
+      saveDatabase();
+      closeAddBookModal();
+
+      showDialog("Book Inserted", `Book #${newId}: "${title}" added to ZA16_L_BOOK_INFO table!`);
+      showStatusMessage(`Added book #${newId}`, "success");
+      executeBookSearch();
+    }
+
+    // SCREEN 1005: GET BOOK
+    function populateGetBookDropdown() {
+      const dd = document.getElementById('getbook-dropdown');
+      if (!dd) return;
+      dd.innerHTML = `<option value="">-- Choose from Catalog (${db.za16_l_book_info.length} books) --</option>`;
+      
+      const issuedSet = new Set(db.za16_l_getbook.map(g => g.book_id));
+
+      db.za16_l_book_info.forEach(b => {
+        const isIssued = issuedSet.has(b.book_id);
+        const opt = document.createElement('option');
+        opt.value = b.book_id;
+        opt.textContent = `#${b.book_id}: ${b.book_name} [${b.author}] ${isIssued ? '(Currently Loaned)' : '✓ Available'}`;
+        dd.appendChild(opt);
+      });
+    }
+
+    function handleDropdownBookSelect() {
+      const val = document.getElementById('getbook-dropdown').value;
+      if (val) {
+        document.getElementById('getbook-input-id').value = val;
+        lookupBookForBorrow();
+      }
+    }
+
+    function lookupBookForBorrow() {
+      const bkId = parseInt(document.getElementById('getbook-input-id').value);
+      if (!bkId) {
+        showDialog("Book Lookup", "Please enter or choose a valid Book ID.");
+        return;
+      }
+
+      const book = db.za16_l_book_info.find(b => b.book_id === bkId);
+      if (!book) {
+        showDialog("Book Not Found", `No book found in catalog with ID ${bkId}`);
+        showStatusMessage("Book not found", "error");
+        return;
+      }
+
+      document.getElementById('getbook-book-id').value = book.book_id;
+      document.getElementById('getbook-book-name').value = book.book_name;
+      document.getElementById('getbook-author').value = book.author;
+      showStatusMessage(`Selected "${book.book_name}" ($${book.prices})`, "info");
+    }
+
+    function executeGetBook() {
+      const bkId = parseInt(document.getElementById('getbook-book-id').value);
+      if (!bkId) {
+        lookupBookForBorrow();
+        return;
+      }
+
+      const stuId = currentStudent ? currentStudent.stu_id : 1;
+
+      // Duplicate check: SELECT SINGLE * FROM za16_l_getbook WHERE stu_id = stu_id AND book_id = bk_id
+      const alreadyBorrowed = db.za16_l_getbook.find(g => g.stu_id === stuId && g.book_id === bkId);
+      if (alreadyBorrowed) {
+        showDialog("Borrow Error", "THE BOOK ALREADY EXISTS TO YOU");
+        showStatusMessage("THE BOOK ALREADY EXISTS TO YOU", "error");
+        return;
+      }
+
+      const book = db.za16_l_book_info.find(b => b.book_id === bkId);
+      const maxGetId = db.za16_l_getbook.reduce((max, g) => Math.max(max, g.get_id || 0), 0);
+      const newGetId = maxGetId + 1;
+
+      const newBorrow = {
+        mandt: '800',
+        get_id: newGetId,
+        stu_id: stuId,
+        book_id: bkId,
+        book_name: book.book_name,
+        author: book.author,
+        addition: '1st Edition',
+        car_date: getTodayFormatted(),
+        return_date: ''
+      };
+
+      db.za16_l_getbook.push(newBorrow);
+      saveDatabase();
+
+      showDialog("Book Issued", `SUCCESS: Book "${book.book_name}" issued successfully!\nGET ID: #${newGetId}`);
+      showStatusMessage(`Book issued (GET ID: ${newGetId})`, "success");
+      callScreen(1007);
+    }
+
+    // SCREEN 1006: Return Book
+    function lookupGetBookRecord() {
+      const getId = parseInt(document.getElementById('retbook-input-getid').value);
+      if (!getId) {
+        showDialog("Input Error", "Please enter a valid GET ID.");
+        return;
+      }
+
+      const rec = db.za16_l_getbook.find(g => g.get_id === getId);
+      if (!rec) {
+        showDialog("Not Found", `No active loan found for GET ID #${getId}`);
+        showStatusMessage(`No record for GET ID ${getId}`, "error");
+        return;
+      }
+
+      document.getElementById('ret-get-id').value = rec.get_id;
+      document.getElementById('ret-stu-id').value = rec.stu_id;
+      document.getElementById('ret-book-id').value = rec.book_id;
+      document.getElementById('ret-book-name').value = rec.book_name;
+      document.getElementById('ret-author').value = rec.author;
+      document.getElementById('ret-rec-date').value = rec.car_date;
+      document.getElementById('ret-ret-date').value = getTodayFormatted();
+      showStatusMessage(`Loaded borrow record #${getId}`, "success");
+    }
+
+    function executeReturnBook() {
+      const getId = parseInt(document.getElementById('ret-get-id').value);
+      if (!getId) {
+        showDialog("Error", "Please look up a GET ID first.");
+        return;
+      }
+
+      quickReturnGetId(getId);
+    }
+
+    function quickReturnGetId(getId) {
+      const idx = db.za16_l_getbook.findIndex(g => g.get_id === getId);
+      if (idx !== -1) {
+        const removed = db.za16_l_getbook.splice(idx, 1)[0];
+        saveDatabase();
+        showDialog("Return Success", `BOOK RETURNED SUCCESSFULLY!\nReturned "${removed.book_name}" (Loan #${getId}).`);
+        showStatusMessage("BOOK RETURNED SUCCESSFULLY", "success");
+        if (currentScreen === 1007) {
+          renderShowBookTable();
+        } else {
+          callScreen(1001);
+        }
+      } else {
+        showDialog("Error", `Loan record #${getId} not found.`);
+      }
+    }
+
+    // SCREEN 1007: Show Book (Inner Join Table)
+    function renderShowBookTable() {
+      const stuId = currentStudent ? currentStudent.stu_id : 1;
+      document.getElementById('show-book-stu-id-label').innerText = stuId;
+      document.getElementById('show-book-stu-name').innerText = currentStudent ? currentStudent.name : 'SIBI_SR';
+
+      const studentInfo = db.za16_l_info.find(i => i.stu_id === stuId) || {};
+      const issuedBooks = db.za16_l_getbook.filter(g => g.stu_id === stuId);
+
+      const tbody = document.getElementById('table-edwr-body');
+      tbody.innerHTML = '';
+
+      if (issuedBooks.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #64748b; padding: 24px;">No books currently issued to this student. Click 'Borrow Another Book' above to get one!</td></tr>`;
+      } else {
+        issuedBooks.forEach(b => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-family: var(--sap-mono); font-weight: bold; color: #0284c7;">#${b.get_id}</td>
+            <td style="font-weight: 600; color: #0f172a;">${b.book_name}</td>
+            <td>${b.author}</td>
+            <td>${b.car_date}</td>
+            <td>${studentInfo.field || 'COMPUTER SCIENCE'}</td>
+            <td style="text-align: center;">
+              <button class="sap-btn sap-btn-sm" style="color: #b91c1c; border-color: #f87171;" onclick="quickReturnGetId(${b.get_id})">
+                RETURN NOW
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    // SCREEN 1008: Update Profile
+    function executeUpdateProfile() {
+      if (!currentStudent) {
+        showDialog("Error", "No active student session.");
+        return;
+      }
+
+      currentStudent.roll = parseInt(document.getElementById('upd-roll').value) || currentStudent.roll;
+      currentStudent.name = document.getElementById('upd-name').value.trim() || currentStudent.name;
+      currentStudent.gender = document.getElementById('upd-gender').value.trim() || currentStudent.gender;
+      currentStudent.degree = document.getElementById('upd-degree').value.trim() || currentStudent.degree;
+      currentStudent.field = document.getElementById('upd-field').value.trim() || currentStudent.field;
+      currentStudent.address = document.getElementById('upd-address').value.trim() || currentStudent.address;
+
+      const idx = db.za16_l_info.findIndex(i => i.stu_id === currentStudent.stu_id);
+      if (idx !== -1) {
+        db.za16_l_info[idx] = currentStudent;
+      }
+      saveDatabase();
+
+      showDialog("Profile Updated", "SUCCESSFUL UPDATED");
+      showStatusMessage("SUCCESSFUL UPDATED", "success");
+      callScreen(1001);
+    }
+
+    /* Toolbar Handlers */
+    function handleToolbarEnter() {
+      const code = document.getElementById('ok-code-input').value.trim().toUpperCase();
+      document.getElementById('ok-code-input').value = '';
+
+      if (code === '/N') {
+        callScreen(1000);
+        showStatusMessage("Session reset to Screen 1000", "info");
+      } else if (code === '/NSE38' || code === 'SE38') {
+        toggleDrawer('abap');
+      } else if (code === '/NSE11' || code === 'SE11') {
+        toggleDrawer('se11');
+      } else if (code.startsWith('SCREEN ') || code.startsWith('/NSCREEN ') || code.startsWith('/N')) {
+        const sNum = parseInt(code.replace(/\D/g, ''));
+        if (sNum && [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008].includes(sNum)) {
+          callScreen(sNum);
+        }
+      } else {
+        if (currentScreen === 1000) executeLogin();
+        else if (currentScreen === 1004) executeBookSearch();
+        else if (currentScreen === 1005) lookupBookForBorrow();
+        else if (currentScreen === 1006) lookupGetBookRecord();
+      }
+    }
+
+    function handleSaveToolbar() {
+      if (currentScreen === 1008) executeUpdateProfile();
+      else if (currentScreen === 1003) executeRegistrationStep2();
+      else showStatusMessage("Nothing to save on this screen", "info");
+    }
+
+    function handleNavBack() {
+      if (currentScreen === 1001) callScreen(1000);
+      else if (currentScreen === 1002) callScreen(1000);
+      else if (currentScreen === 1003) callScreen(1002);
+      else if ([1004, 1005, 1006, 1007, 1008].includes(currentScreen)) callScreen(1001);
+      else callScreen(1000);
+    }
+
+    function handleNavExit() {
+      callScreen(0);
+    }
+
+    function handleNavCancel() {
+      if ([1002, 1003].includes(currentScreen)) callScreen(1000);
+      else if ([1004, 1005, 1006, 1007, 1008].includes(currentScreen)) callScreen(1001);
+      else callScreen(1000);
+    }
+
+    /* Keyboard Shortcuts */
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'F3') {
+        e.preventDefault();
+        handleNavBack();
+      } else if (e.key === 'F12') {
+        e.preventDefault();
+        handleNavCancel();
+      } else if (e.key === 'Escape') {
+        closeDialog();
+        closeAddBookModal();
+        document.querySelectorAll('.side-drawer').forEach(el => el.classList.remove('open'));
+      }
+    });
+
+    /* UI Utilities */
+    function showStatusMessage(text, type = "info") {
+      const el = document.getElementById('status-bar-text');
+      const container = document.getElementById('status-bar-message');
+      if (el) el.innerText = text;
+      if (container) container.className = `sap-sb-msg ${type}`;
+    }
+
+    function showDialog(title, message) {
+      document.getElementById('dialog-title').innerText = title;
+      document.getElementById('dialog-message').innerText = message;
+      document.getElementById('sap-dialog-overlay').classList.add('active');
+    }
+
+    function closeDialog() {
+      document.getElementById('sap-dialog-overlay').classList.remove('active');
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute('data-theme');
+      const next = current === 'classic' ? 'fiori' : 'classic';
+      body.setAttribute('data-theme', next);
+      document.getElementById('theme-name').innerText = next === 'classic' ? 'SAP GUI Classic' : 'SAP Fiori (Horizon)';
+    }
+
+    function toggleDrawer(drawer) {
+      const d = document.getElementById(`drawer-${drawer}`);
+      const isOpen = d.classList.contains('open');
+      document.querySelectorAll('.side-drawer').forEach(el => el.classList.remove('open'));
+      if (!isOpen) {
+        d.classList.add('open');
+        if (drawer === 'se11') renderSe11Table();
+        if (drawer === 'abap') updateAbapCodeDrawer(currentScreen);
+      }
+    }
+
+    function updateAbapCodeDrawer(screen) {
+      const info = ABAP_CODE_MAP[screen] || ABAP_CODE_MAP[1000];
+      document.getElementById('abap-drawer-title').innerText = `Screen ${screen} ABAP Logic`;
+      document.getElementById('abap-active-include').innerText = info.include;
+      document.getElementById('abap-code-content').innerText = info.code;
+    }
+
+    function renderSe11Table() {
+      const tblName = document.getElementById('se11-table-select').value;
+      const rows = db[tblName] || [];
+      const container = document.getElementById('se11-table-view');
+
+      if (rows.length === 0) {
+        container.innerHTML = `<div style="color: #64748b; padding: 10px;">Table ${tblName.toUpperCase()} is currently empty.</div>`;
+        return;
+      }
+
+      const keys = Object.keys(rows[0]);
+      let html = `<table class="sap-table" style="font-size: 11px;"><thead><tr>`;
+      keys.forEach(k => html += `<th>${k.toUpperCase()}</th>`);
+      html += `</tr></thead><tbody>`;
+
+      rows.forEach(r => {
+        html += `<tr>`;
+        keys.forEach(k => html += `<td>${r[k] !== undefined ? r[k] : ''}</td>`);
+        html += `</tr>`;
+      });
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      loadDatabase();
+      callScreen(1000);
+      updateAbapCodeDrawer(1000);
+    });
+  </script>
+</body>
+</html>
