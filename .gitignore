@@ -12,3 +12,7 @@ desktop.ini
 # IDE & Editor files
 .vscode/
 .idea/
+
+# Personal local study guides
+SAP_ABAP_Library_Management_System_Master_Guide.*
+*.pdf
