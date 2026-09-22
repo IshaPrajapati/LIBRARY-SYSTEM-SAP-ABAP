@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SAP ABAP Library Management System - Master Technical & Interview Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'Inter', sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.6;
+      font-size: 10.5pt;
+    }
+
+    .cover {
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 90vh;
+      padding: 40px 20px;
+    }
+
+    .badge-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 8.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-sap { background: #0a6ed1; color: #fff; }
+    .badge-dynpro { background: #0284c7; color: #fff; }
+    .badge-interview { background: #059669; color: #fff; }
+
+    h1.title {
+      font-size: 28pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 14pt;
+      color: #475569;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+
+    .meta-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 25px 0;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      font-size: 10pt;
+    }
+
+    .meta-item strong {
+      color: #0f172a;
+      display: block;
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .section-break {
+      page-break-before: always;
+      padding-top: 10px;
+    }
+
+    h2 {
+      font-size: 16pt;
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 2px solid #0a6ed1;
+      padding-bottom: 6px;
+      margin-top: 28px;
+      margin-bottom: 16px;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      font-size: 12.5pt;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      page-break-after: avoid;
+    }
+
+    h4 {
+      font-size: 11pt;
+      font-weight: 600;
+      color: #334155;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: #334155;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 14px;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .pitch-quote {
+      background: #f0f7ff;
+      border-left: 4px solid #0a6ed1;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      font-size: 11pt;
+      font-style: italic;
+      color: #1e3a8a;
+      margin: 18px 0;
+      line-height: 1.7;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px 0;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+
+    th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 600;
+      text-align: left;
+      padding: 9px 12px;
+      border: 1px solid #1e293b;
+    }
+
+    td {
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    pre, code {
+      font-family: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 8.5pt;
+      overflow-x: auto;
+      margin: 14px 0;
+      page-break-inside: avoid;
+      line-height: 1.5;
+    }
+
+    p code, li code, td code {
+      background: #f1f5f9;
+      color: #0369a1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+      font-weight: 500;
+      border: 1px solid #e2e8f0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+
+    .callout-tip {
+      background: #ecfdf5;
+      border-left: 4px solid #10b981;
+      color: #065f46;
+    }
+
+    .callout-warn {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      color: #92400e;
+    }
+
+    .callout-senior {
+      background: #faf5ff;
+      border-left: 4px solid #a855f7;
+      color: #6b21a8;
+    }
+
+    .qa-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      page-break-inside: avoid;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .qa-q {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 10.5pt;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .qa-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 8pt;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .qa-a {
+      color: #334155;
+      font-size: 10pt;
+      line-height: 1.6;
+    }
+
+    .checklist {
+      list-style-type: none;
+      margin-left: 0;
+    }
+
+    .checklist li {
+      padding: 8px 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .check-box {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #0a6ed1;
+      border-radius: 3px;
+      display: inline-block;
+      position: relative;
+    }
+
+    .check-box::after {
+      content: '✓';
+      position: absolute;
+      top: -3px;
+      left: 2px;
+      font-size: 12px;
+      color: #0a6ed1;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER PAGE -->
+  <div class="cover">
+    <div class="badge-bar">
+      <span class="badge badge-sap">SAP NetWeaver ABAP 7.5+</span>
+      <span class="badge badge-dynpro">Module Pool (Dynpro)</span>
+      <span class="badge badge-interview">Complete Interview Guide</span>
+    </div>
+    <h1 class="title">SAP ABAP Library Management System</h1>
+    <div class="subtitle">Complete Technical Architecture, Dynpro Flow Logic, DDIC Data Model & Comprehensive Interview Q&A</div>
+
+    <div class="meta-box">
+      <div class="meta-grid">
+        <div class="meta-item">
+          <strong>Program Name / Type</strong>
+          <code>ZA16_LIBRARY_MANAGEMENT</code> (Module Pool / Type M)
+        </div>
+        <div class="meta-item">
+          <strong>Transaction Code (T-Code)</strong>
+          <code>ZLIB</code> (Initial Screen 1000)
+        </div>
+        <div class="meta-item">
+          <strong>Database Layer</strong>
+          4 Custom DDIC Transparent Tables (SE11) with Client Handling (<code>MANDT</code>)
+        </div>
+        <div class="meta-item">
+          <strong>Presentation Layer</strong>
+          8 Dynpro Dialog Screens (SE51) + SAP Table Controls (<code>LIB1</code>, <code>EDWR</code>)
+        </div>
+        <div class="meta-item">
+          <strong>Candidate / Developer</strong>
+          Isha Prajapati
+        </div>
+        <div class="meta-item">
+          <strong>GitHub Repository</strong>
+          <code>github.com/IshaPrajapati/LIBRARY-SYSTEM-SAP-ABAP</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: 30px;">
+      💡 <strong>How to Use This Guide:</strong> Study Section 1 for your 90-second elevator pitch. Master Sections 2 to 4 to explain the database and screen lifecycles in technical detail. Practice Section 5 for word-for-word responses to tough interviewer questions.
+    </div>
+  </div>
+
+  <!-- SECTION 1: ELEVATOR PITCH -->
+  <div class="section-break">
+    <h2>1. 🎙️ 60–90 Second Elevator Pitch ("Tell Me About Your Project")</h2>
+    <p>Memorize and practice speaking this clear, professional pitch when asked to introduce your project in an interview:</p>
+
+    <div class="pitch-quote">
+      "My project is a full-lifecycle <strong>Library Management System</strong> developed using <strong>SAP ABAP Dialog Programming (Dynpro / Module Pool)</strong> under custom transaction code <strong>ZLIB</strong> on SAP NetWeaver AS ABAP 7.5+.<br><br>
+      The application automates institutional library operations: student onboarding, secure credential authentication, real-time book discovery with interactive <strong>Table Controls</strong>, duplicate borrowing validation, automated loan issuance, return settlement, and profile maintenance.<br><br>
+      Architecturally, the backend is built on <strong>4 custom ABAP Dictionary (SE11) tables</strong> with client-dependent (<code>MANDT</code>) multi-tenancy. The frontend spans <strong>8 Dynpro screens (1000 through 1008)</strong> managed through modularized <strong>ABAP Include programs</strong>. It handles full <strong>PBO</strong> and <strong>PAI</strong> event lifecycles, dynamic <strong>Table Controls (<code>LIB1</code> and <code>EDWR</code>)</strong>, relational <strong>Open SQL Inner Joins</strong>, <strong>Field Symbols</strong>, and <strong>OK-Code navigation</strong>.<br><br>
+      Additionally, I engineered a pixel-perfect web simulator replicate of the SAP GUI Signature Theme so the entire system can be showcased live on any browser or mobile device without requiring a direct SAP GUI connection."
+    </div>
+  </div>
+
+  <!-- SECTION 2: SYSTEM ARCHITECTURE -->
+  <div class="section-break">
+    <h2>2. 🏛️ SAP Technical Architecture & Dynpro Lifecycle</h2>
+    <p>SAP ABAP applications follow a strict 3-tier architecture. Here is how this project maps to the enterprise landscape:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tier / Layer</th>
+          <th>SAP Component</th>
+          <th>Implementation in ZA16_LIBRARY_MANAGEMENT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Presentation Layer</strong></td>
+          <td>SAP GUI / Web Dynpro</td>
+          <td>Screens 1000–1008 (Screen Painter SE51), Table Controls <code>LIB1</code> and <code>EDWR</code>, GUI Status, Pushbuttons, Radio Buttons.</td>
+        </tr>
+        <tr>
+          <td><strong>Application Layer</strong></td>
+          <td>ABAP Work Processes & Runtime</td>
+          <td>Module Pool Program <code>ZA16_LIBRARY_MANAGEMENT</code>, 5 modular Includes, PBO/PAI modules, Field Symbols, Subroutines (Forms).</td>
+        </tr>
+        <tr>
+          <td><strong>Database Layer</strong></td>
+          <td>Relational DBMS (HANA/Oracle/DB6)</td>
+          <td>4 DDIC Transparent Tables: <code>ZA16_L_LOGIN</code>, <code>ZA16_L_INFO</code>, <code>ZA16_L_BOOK_INFO</code>, <code>ZA16_L_GETBOOK</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The Dynpro (PBO & PAI) Processing Lifecycle</h3>
+    <pre>
+[User Action in GUI / Click Button] 
+               │
+               ▼
+┌──────────────────────────────────────────────┐
+│  PAI (Process After Input) of Current Screen │
+│  • Captured in system field: SY-UCOMM        │
+│  • Input Field Validations (CHAIN / FIELD)   │
+│  • USER_COMMAND modules execute logic        │
+│  • Database updates (INSERT / UPDATE / DEL)  │
+│  • Screen Navigation (CALL SCREEN / LEAVE)   │
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│  PBO (Process Before Output) of Next Screen  │
+│  • STATUS_xxxx modules executed              │
+│  • SET PF-STATUS (Menu, Toolbar buttons)     │
+│  • SET TITLEBAR (Dynamic screen titles)      │
+│  • Populate fields, read database data       │
+│  • Loop & bind Table Control lines (SY-LOOPC)│
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+[Render Screen on User GUI with Populated Data]
+    </pre>
+  </div>
+
+  <!-- SECTION 3: DDIC SE11 DATA MODEL -->
+  <div class="section-break">
+    <h2>3. 🗄️ ABAP Dictionary (SE11) Data Model</h2>
+    <p>The system stores all master and transactional data in 4 custom transparent tables:</p>
+
+    <h3>1. <code>ZA16_L_LOGIN</code> — Authentication & Credentials</h3>
+    <p>Application table storing student system credentials. Linked 1:1 with <code>ZA16_L_INFO</code>.</p>
+    <table>
+      <thead>
+        <tr><th>Field Name</th><th>Key</th><th>Data Element</th><th>Data Type</th><th>Length</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>MANDT</code></td><td><strong>Yes</strong></td><td><code>MANDT</code></td><td>CLNT</td><td>3</td><td>Client ID (ensures multi-tenancy)</td></tr>
+        <tr><td><code>STU_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_STU_ID</code></td><td>INT2</td><td>5</td><td>Student Unique ID (Primary Key)</td></tr>
+        <tr><td><code>USER_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_USER_ID</code></td><td>CHAR</td><td>13</td><td>Username / Mobile Number</td></tr>
+        <tr><td><code>PASSWORD</code></td><td>No</td><td><code>ZA16_PASSWORD</code></td><td>CHAR</td><td>13</td><td>Account Access Password</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2. <code>ZA16_L_INFO</code> — Student Master Demographics</h3>
+    <p>Contains full personal, academic, and contact details of registered students.</p>
+    <table>
+      <thead>
+        <tr><th>Field Name</th><th>Key</th><th>Data Element</th><th>Data Type</th><th>Length</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>MANDT</code></td><td><strong>Yes</strong></td><td><code>MANDT</code></td><td>CLNT</td><td>3</td><td>Client ID</td></tr>
+        <tr><td><code>STU_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_STU_ID</code></td><td>INT2</td><td>5</td><td>Student ID Reference</td></tr>
+        <tr><td><code>USER_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_USER_ID</code></td><td>CHAR</td><td>13</td><td>Username Reference</td></tr>
+        <tr><td><code>ROLL</code></td><td><strong>Yes</strong></td><td><code>ZA16_ROLLNO</code></td><td>INT1</td><td>3</td><td>Student Roll Number</td></tr>
+        <tr><td><code>NAME</code></td><td>No</td><td><code>ZA16_NAME</code></td><td>CHAR</td><td>30</td><td>Full Student Name</td></tr>
+        <tr><td><code>GENDER</code></td><td>No</td><td><code>ZA16_GENDER</code></td><td>CHAR</td><td>10</td><td>Gender (Male / Female / Others)</td></tr>
+        <tr><td><code>DEGREE</code></td><td>No</td><td><code>ZA16_DEGREE</code></td><td>CHAR</td><td>50</td><td>Academic Degree (e.g., B.Tech)</td></tr>
+        <tr><td><code>FIELD</code></td><td>No</td><td><code>ZA16_FIELD</code></td><td>CHAR</td><td>50</td><td>Department / Branch</td></tr>
+        <tr><td><code>ADDRESS</code></td><td>No</td><td><code>ZA16_ADDRESS</code></td><td>CHAR</td><td>255</td><td>Residential Address</td></tr>
+        <tr><td><code>DATE_AND_TIME</code></td><td>No</td><td><code>ZA16_DT</code></td><td>CHAR</td><td>100</td><td>Registration Timestamp</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3. <code>ZA16_L_BOOK_INFO</code> — Master Book Catalog</h3>
+    <table>
+      <thead>
+        <tr><th>Field Name</th><th>Key</th><th>Data Element</th><th>Data Type</th><th>Length</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>MANDT</code></td><td><strong>Yes</strong></td><td><code>MANDT</code></td><td>CLNT</td><td>3</td><td>Client ID</td></tr>
+        <tr><td><code>BOOK_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_BOOK_ID</code></td><td>INT2</td><td>5</td><td>Unique Book Identifier</td></tr>
+        <tr><td><code>BOOK_NAME</code></td><td>No</td><td><code>ZA16_BOOK_NAME</code></td><td>CHAR</td><td>50</td><td>Book Title</td></tr>
+        <tr><td><code>AUTHOR</code></td><td>No</td><td><code>ZA16_AUTHOR</code></td><td>CHAR</td><td>20</td><td>Author Name</td></tr>
+        <tr><td><code>PRICES</code></td><td>No</td><td><code>ZA16_PRICES</code></td><td>CHAR</td><td>10</td><td>Price / Value</td></tr>
+      </tbody>
+    </table>
+
+    <h3>4. <code>ZA16_L_GETBOOK</code> — Active Loans & Issuance Registry</h3>
+    <table>
+      <thead>
+        <tr><th>Field Name</th><th>Key</th><th>Data Element</th><th>Data Type</th><th>Length</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>MANDT</code></td><td><strong>Yes</strong></td><td><code>MANDT</code></td><td>CLNT</td><td>3</td><td>Client ID</td></tr>
+        <tr><td><code>GET_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_GET_ID</code></td><td>INT2</td><td>5</td><td>Unique Loan Transaction Number</td></tr>
+        <tr><td><code>STU_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_STU_ID</code></td><td>INT2</td><td>5</td><td>Borrowing Student ID</td></tr>
+        <tr><td><code>BOOK_ID</code></td><td><strong>Yes</strong></td><td><code>ZA16_BOOK_ID</code></td><td>INT2</td><td>5</td><td>Borrowed Book ID</td></tr>
+        <tr><td><code>BOOK_NAME</code></td><td>No</td><td><code>ZA16_BOOK_NAME</code></td><td>CHAR</td><td>50</td><td>Book Title</td></tr>
+        <tr><td><code>AUTHOR</code></td><td>No</td><td><code>ZA16_AUTHOR</code></td><td>CHAR</td><td>20</td><td>Author Name</td></tr>
+        <tr><td><code>ADDITION</code></td><td>No</td><td><code>ZA16_ADDITION</code></td><td>CHAR</td><td>20</td><td>Edition / Notes</td></tr>
+        <tr><td><code>CAR_DATE</code></td><td>No</td><td><code>ZA16_DATE</code></td><td>CHAR</td><td>20</td><td>Issue Date (DD/MM/YYYY)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 4: SCREEN FLOW & MODULES -->
+  <div class="section-break">
+    <h2>4. 🖥️ Screen-by-Screen Flow & Business Logic</h2>
+
+    <h3>Screen 1000: Authentication (Login)</h3>
+    <ul>
+      <li><strong>PBO:</strong> Initializes screen parameters, clears credentials.</li>
+      <li><strong>PAI:</strong> Triggers on OK-Code <code>'LOGIN'</code>. Queries <code>ZA16_L_LOGIN</code>:</li>
+    </ul>
+    <pre>
+SELECT SINGLE * FROM za16_l_login INTO wa_login
+  WHERE user_id = user_id AND password = password.
+IF sy-subrc = 0.
+  stu_id = wa_login-stu_id.
+  CALL SCREEN 1001.
+ELSE.
+  MESSAGE 'ENTER THE CORRECT VALUE' TYPE 'I'.
+ENDIF.
+    </pre>
+
+    <h3>Screen 1001: Central Dashboard & Navigation Dispatcher</h3>
+    <ul>
+      <li><strong>PBO:</strong> Dynamic welcome banner. Queries student name from <code>ZA16_L_INFO</code> using active <code>STU_ID</code>.</li>
+      <li><strong>PAI:</strong> Dispatches to modules based on button clicked:
+        <ul>
+          <li><code>'SEARCH'</code> ➔ <code>CALL SCREEN 1004</code> (Search Books)</li>
+          <li><code>'GET'</code> ➔ <code>CALL SCREEN 1005</code> (Issue Book)</li>
+          <li><code>'RETURN'</code> ➔ <code>CALL SCREEN 1006</code> (Return Book)</li>
+          <li><code>'SHOW'</code> ➔ <code>LEAVE TO SCREEN 1007</code> (Active Borrowings)</li>
+          <li><code>'UPDATE'</code> ➔ <code>CALL SCREEN 1008</code> (Update Profile)</li>
+          <li><code>'LOGOUT'</code> ➔ <code>CALL SCREEN 1000</code></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>Screens 1002 & 1003: Two-Step Student Registration</h3>
+    <ul>
+      <li><strong>Screen 1002 (Credentials):</strong> Validates password confirmation (<code>pass = pass2</code>). Auto-generates student ID via <code>SELECT MAX( stu_id )</code>, commits to <code>ZA16_L_LOGIN</code>, and calls Screen 1003.</li>
+      <li><strong>Screen 1003 (Demographics):</strong> Collects gender via radio buttons, academic degree, branch, address, roll number, and sets timestamp. Commits to <code>ZA16_L_INFO</code>.</li>
+    </ul>
+
+    <h3>Screen 1004: Catalog Search with Table Control <code>LIB1</code></h3>
+    <ul>
+      <li><strong>Table Control Declaration:</strong> <code>CONTROLS: lib1 TYPE TABLEVIEW USING SCREEN 1004.</code></li>
+      <li><strong>PBO Flow:</strong>
+        <pre>
+MODULE lib1_init OUTPUT.
+  IF g_lib1_copied IS INITIAL.
+    SELECT * FROM za16_l_book_info INTO CORRESPONDING FIELDS OF TABLE g_lib1_itab.
+    g_lib1_copied = 'X'.
+    REFRESH CONTROL 'LIB1' FROM SCREEN '1004'.
+  ENDIF.
+ENDMODULE.
+
+MODULE lib1_move OUTPUT.
+  MOVE-CORRESPONDING g_lib1_wa TO za16_l_book_info.
+ENDMODULE.
+        </pre>
+      </li>
+      <li>Allows pagination (<code>P+</code>, <code>P-</code>, <code>P++</code>, <code>P--</code>) and scrolling.</li>
+    </ul>
+
+    <h3>Screen 1005: Book Issuance Engine</h3>
+    <ul>
+      <li><strong>Business Rule Validation:</strong> Prevents duplicate borrowing of the same title:
+        <pre>
+SELECT SINGLE * FROM za16_l_getbook INTO gg_book WHERE stu_id = stu_id.
+IF gg_book IS NOT INITIAL AND gg_book-book_id = bk_id.
+  MESSAGE 'THE BOOK ALREADY EXISTS TO YOU' TYPE 'I'.
+ELSE.
+  " Auto-increment GET_ID and write loan record
+  INSERT za16_l_getbook FROM wa_get.
+ENDIF.
+        </pre>
+      </li>
+      <li>Uses <code>sy-datum</code> date slicing: <code>cr_dat2+0(4)</code> (Year), <code>cr_dat2+4(2)</code> (Month), <code>cr_dat2+6(2)</code> (Day) concatenated into <code>DD/MM/YYYY</code>.</li>
+    </ul>
+
+    <h3>Screen 1006: Return & Settlement</h3>
+    <ul>
+      <li>Fetches loan record by <code>GET_ID</code>. Displays book details, loan date, and calculated return date.</li>
+      <li>Settles loan by executing: <code>DELETE FROM za16_l_getbook WHERE get_id = bk_id2.</code></li>
+    </ul>
+
+    <h3>Screen 1007: Inner Join Active Borrowings (Table Control <code>EDWR</code>)</h3>
+    <pre>
+SELECT za16_l_info~stu_id, za16_l_info~user_id, za16_l_info~name,
+       za16_l_info~roll, za16_l_info~field, za16_l_info~date_and_time,
+       za16_l_getbook~get_id, za16_l_getbook~book_id,
+       za16_l_getbook~author, za16_l_getbook~car_date
+  INTO CORRESPONDING FIELDS OF TABLE it_join
+  FROM za16_l_info INNER JOIN za16_l_getbook
+    ON za16_l_info~stu_id = za16_l_getbook~stu_id
+  WHERE za16_l_info~stu_id = stu_id.
+    </pre>
+  </div>
+
+  <!-- SECTION 5: INTERVIEW Q&A -->
+  <div class="section-break">
+    <h2>5. 🎯 Top 20 Real Interview Questions & Expert Answers</h2>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Dynpro</span> Q1: What type of program is this, and how is it executed?</div>
+      <div class="qa-a">This is a <strong>Module Pool Program (Type M)</strong>. Unlike executable reports (Type 1) that begin with <code>START-OF-SELECTION</code>, module pool programs cannot be executed via F8 in SE38. They require a <strong>Transaction Code (T-Code)</strong> created in transaction <strong>SE93</strong>, pointing to program <code>ZA16_LIBRARY_MANAGEMENT</code> and initial screen <code>1000</code>.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Dynpro</span> Q2: What is the purpose of SY-UCOMM and why should it be cleared?</div>
+      <div class="qa-a"><code>SY-UCOMM</code> is a system field holding the function code triggered by the user's interaction (pushbutton, Enter, menu item). We bind a screen field (often <code>OK_CODE</code>) to it. After processing in PAI, both <code>OK_CODE</code> and <code>SY-UCOMM</code> must be cleared (<code>CLEAR ok_code; CLEAR sy-ucomm;</code>) to avoid re-triggering the same action unintentionally on subsequent screen passes or Enter clicks.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Navigation</span> Q3: What is the exact difference between CALL SCREEN and LEAVE TO SCREEN?</div>
+      <div class="qa-a">
+        <ul>
+          <li><code>CALL SCREEN &lt;nnnn&gt;</code>: Pushes the current screen onto SAP's internal screen stack (up to 50 levels deep) and initiates a new screen sequence. Returning is done via <code>LEAVE TO SCREEN 0</code>, which restores the previous screen's context.</li>
+          <li><code>LEAVE TO SCREEN &lt;nnnn&gt;</code>: Replaces the current screen at the same stack level without nesting. Control does not automatically return back when done.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Table Control</span> Q4: How does a Table Control work in Dynpro flow logic?</div>
+      <div class="qa-a">
+        In the screen painter, a Table Control is linked to a declared control (<code>CONTROLS tc TYPE TABLEVIEW USING SCREEN ...</code>).<br>
+        In <strong>PBO</strong>, we loop through the internal table with control (<code>LOOP AT itab INTO wa WITH CONTROL tc</code>) to transfer data line-by-line to the screen fields for visible lines (governed by <code>SY-LOOPC</code>).<br>
+        In <strong>PAI</strong>, a corresponding <code>LOOP AT itab</code> receives any user input or selection flags modified on screen and updates the internal table.
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">DDIC</span> Q5: Why is MANDT the first primary key in all 4 custom tables?</div>
+      <div class="qa-a"><code>MANDT</code> (Client, data type <code>CLNT</code>) makes the table <strong>client-dependent</strong>. In SAP multi-tenant architecture, multiple business clients (e.g., Client 100 for Development, 200 for QA) share the same database. The ABAP Open SQL runtime automatically filters queries by the user's active client (<code>sy-mandt</code>), guaranteeing complete data isolation across clients.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Open SQL</span> Q6: Why did you use SELECT SINGLE for login and not UP TO 1 ROWS?</div>
+      <div class="qa-a"><code>SELECT SINGLE</code> is designed for queries where the complete primary key is specified in the <code>WHERE</code> clause. The database retrieves the exact unique record directly without creating a cursor. <code>UP TO 1 ROWS</code> is intended for searching when the full primary key is not provided and multiple rows could match.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Performance</span> Q7: Why should SELECT ... ENDSELECT be avoided in production SAP systems?</div>
+      <div class="qa-a"><code>SELECT ... ENDSELECT</code> executes a row-by-row cursor loop across the network between the application server and the database, leading to high latency and database bottlenecks. The standard SAP best practice is <strong>Array Fetching</strong>: <code>SELECT ... INTO TABLE &lt;itab&gt;</code>, which retrieves records in bulk packets.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Advanced ABAP</span> Q8: What are Field Symbols and why were they used in your Table Control subroutines?</div>
+      <div class="qa-a">Field Symbols (e.g., <code>FIELD-SYMBOLS &lt;tc&gt; TYPE cxtab_control</code>) are typed symbolic pointers to existing memory areas, analogous to pointers in C/C++. In the generic table control routine <code>user_ok_tc</code>, they allow dynamically assigning and manipulating any table control structure and mark columns (<code>ASSIGN (p_tc_name) TO &lt;tc&gt;</code>) at runtime without creating redundant memory copies.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Error Handling</span> Q9: How do message types 'E', 'I', and 'S' differ in SAP Dynpro?</div>
+      <div class="qa-a">
+        <ul>
+          <li><code>TYPE 'E'</code> (Error): Displays in the status line, turns input fields in error red, lock fields, and interrupts PAI until valid input is supplied.</li>
+          <li><code>TYPE 'I'</code> (Information): Displays a modal dialog pop-up. Once the user clicks Enter, execution continues uninterrupted.</li>
+          <li><code>TYPE 'S'</code> (Success): Displays a green checkmark confirmation in the status bar on the subsequent screen without halting execution.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q"><span class="qa-badge">Architecture</span> Q10: How would you modernize this project for SAP S/4HANA?</div>
+      <div class="qa-a">
+        1. Replace classic Dynpro screens with modern <strong>SAP Fiori / SAPUI5</strong> responsive web apps.<br>
+        2. Build <strong>ABAP Core Data Services (CDS) Views</strong> to push data join and validation logic down into the in-memory SAP HANA database engine.<br>
+        3. Expose backend services via <strong>OData v2 / v4</strong> using the <strong>ABAP RESTful Application Programming Model (RAP)</strong>.<br>
+        4. Replace manual sequence generation (<code>SELECT MAX</code>) with <strong>SAP Number Range Objects (SNRO)</strong> and function module <code>NUMBER_GET_NEXT</code>.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: PRE-INTERVIEW CHECKLIST -->
+  <div class="section-break">
+    <h2>6. 📋 Final Pre-Interview Mastery Checklist</h2>
+    <ul class="checklist">
+      <li><span class="check-box"></span> Know all 4 table names by heart: <code>ZA16_L_LOGIN</code>, <code>ZA16_L_INFO</code>, <code>ZA16_L_BOOK_INFO</code>, <code>ZA16_L_GETBOOK</code>.</li>
+      <li><span class="check-box"></span> Know all 8 screen numbers: 1000 (Login), 1001 (Dashboard), 1002/1003 (Registration), 1004 (Catalog), 1005 (Issue), 1006 (Return), 1007 (My Loans Join), 1008 (Profile).</li>
+      <li><span class="check-box"></span> Explain the Dynpro lifecycle: PBO runs before screen render; PAI runs on user interaction.</li>
+      <li><span class="check-box"></span> Explain <code>CALL SCREEN</code> (stacking) vs <code>LEAVE TO SCREEN</code> (replacement) vs <code>LEAVE TO SCREEN 0</code> (return).</li>
+      <li><span class="check-box"></span> Explain Table Control loops in PBO and PAI and the role of <code>SY-LOOPC</code>.</li>
+      <li><span class="check-box"></span> Explain the <code>INNER JOIN</code> on Screen 1007 between <code>ZA16_L_INFO</code> and <code>ZA16_L_GETBOOK</code>.</li>
+      <li><span class="check-box"></span> Have your live Vercel URL handy on your phone/tablet to demonstrate the live SAP GUI simulator!</li>
+    </ul>
+  </div>
+
+</body>
+</html>
